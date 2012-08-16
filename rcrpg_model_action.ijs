@@ -2,12 +2,12 @@ NB. rcrpg_model_action.ijs
 
 take=: 3 : 0
  'ALL NOTFOUND'=. _1 0+# OPTIONS=. STUFF_names, <'all'
- OPTED=. OPTIONS i. <y
+ CHOSEN=. OPTIONS i. <y
  AVAILABLE=. PC_location { STUFF
- select. OPTED
+ select. CHOSEN
    case. NOTFOUND do. 1[log ERROR return.
    case. ALL do. GATHERED=. AVAILABLE
-   case. do.     GATHERED=. AVAILABLE * 1 OPTED} STUFF_none
+   case. do.     GATHERED=. AVAILABLE * 1 CHOSEN} STUFF_none
  end.
  if. 0=+/GATHERED do.
    0[report TOOK_NOTHING return.
@@ -47,8 +47,6 @@ assure_room=: 3 : 0
  end.
  0
 )
-
-PLACE_qualities=: ;:'coordinates passageways stuff names'
 
 alter=: 4 : 0
  COLUMN=. PLACE_qualities i. <x

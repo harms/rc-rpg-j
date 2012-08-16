@@ -1,5 +1,7 @@
-NB. rcrpg_main_initialize.ijs
+NB. rcrpg_model_initialize.ijs
 
+
+PLACE_qualities=: ;:'coordinates passageways stuff names'
 UNNAMED=: s:'`'
 
 STUFF_names=: ;: 'sledge ladder gold'
