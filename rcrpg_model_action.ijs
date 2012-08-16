@@ -1,21 +1,31 @@
 NB. rcrpg_model_action.ijs
 
-take=: 3 : 0
+take_load=: 3 : 0
+ SOURCE=. PC_location { STUFF
+ 0[load_stuff y; 1; SOURCE; TOOK_STUFF; TOOK_NOTHING
+)
+
+drop_load=: 3 : 0
+ SOURCE=. PC_stuff
+ 0[load_stuff y; _1; SOURCE; DROPPED_STUFF; DROPPED_NOTHING
+)
+
+load_stuff=: 3 : 0
+ 'CHOICE FLOW AVAILABLE SUCCESS FAILURE'=. y
  'ALL NOTFOUND'=. _1 0+# OPTIONS=. STUFF_names, <'all'
- CHOSEN=. OPTIONS i. <y
- AVAILABLE=. PC_location { STUFF
+ CHOSEN=. OPTIONS i. <CHOICE
  select. CHOSEN
    case. NOTFOUND do. 1[log ERROR return.
-   case. ALL do. GATHERED=. AVAILABLE
-   case. do.     GATHERED=. AVAILABLE * 1 CHOSEN} STUFF_none
+   case. ALL do. GATHERED=. FLOW * AVAILABLE
+   case. do.     GATHERED=. FLOW * AVAILABLE * 1 CHOSEN} STUFF_none
  end.
  if. 0=+/GATHERED do.
-   0[report TOOK_NOTHING return.
+   0[report FAILURE return.
  end.
  REMAINDER=. AVAILABLE - GATHERED
  'stuff' alter REMAINDER PC_location} STUFF
  PC_stuff=: PC_stuff + GATHERED
- 0[report TOOK_STUFF
+ 0[report SUCCESS
 )
 
 name_room=: 3 : 0
@@ -55,7 +65,8 @@ alter=: 4 : 0
    PLACE=: (boxIfOpen y) COLUMN} PLACE
    update PLACE
    0 return.
- else. 1[log ERROR
+ else. 
+   1[log ERROR
  end.
 )
 
