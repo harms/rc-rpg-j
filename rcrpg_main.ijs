@@ -8,13 +8,13 @@ rcrpg=: 3 : 0
  'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
 
-ERROR                    =: 'An error condition occurred.'
-TOOK_STUFF               =: 'You are carrying that stuff.'
+TOOK_STUFF               =: 'You are now carrying that stuff.'
 TOOK_NOTHING             =: 'There was nothing to take.'
 ROOM_NAMED               =: 'This room now has that name.'
 PASSAGEWAY_DUG           =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
+ERROR                    =: 'An error condition occurred.'
 log=: 3 :' smoutput ''Log entry: '', y '
 
 take=: 3 : 0
@@ -27,7 +27,7 @@ take=: 3 : 0
    case. do.     GATHERED=. AVAILABLE * 1 OPTED} STUFF_none
  end.
  if. 0=+/GATHERED do.
-   -0[report TOOK_NOTHING return.
+   0[report TOOK_NOTHING return.
  end.
  REMAINDER=. AVAILABLE - GATHERED
  'stuff' alter REMAINDER PC_location} STUFF
@@ -86,20 +86,17 @@ update=: 3 : 0
 )
 
 
+UNNAMED=: s:'`'
 
-'maybe delete this code' 1 : 0
 STUFF_names=: ;: 'sledge ladder gold'
 STUFF_none=: (#STUFF_names)#0
+
+'maybe delete this code' 1 : 0
 spot=: 3 :'(1) (STUFF_names i. y) } STUFF_none '
 Sledge=: 1 :' (spot <''sledge'') * +/,m '
 Ladder=: 1 :' (spot <''ladder'') * +/,m '
 Gold=:   1 :' (spot <''gold''  ) * +/,m '
 )
-
-none  =:   0
-player=: 101
-
-UNNAMED=: s:'`'
 
 WAYS=: = i. 6
 DIRECTIONS=: ' down up north south west east'
@@ -109,6 +106,9 @@ DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 NB. DIRECTION_LABELS ,&<"_1 DIRECTION_ZYX
 
 ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
+passage=: { WAYS"_
+
+boxIfOpen=: <^:(L. = 0:)
 
 
 SEALED=: 6$0
@@ -118,32 +118,7 @@ PLACE=: PLACE ,&.> 0 0 0; SEALED; 1 Sledge; s:'`Starting room'
 PLACE=: PLACE ,&.> 5 1 1; SEALED; 9 Gold;   s:'`Prize room'
 update PLACE
 
-Note 'initialization'
-   PLACE
-┌─────┬───────────┬─────┬──────────────┐
-│0 0 0│0 0 0 0 0 0│1 0 0│`Starting room│
-│5 1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
-└─────┴───────────┴─────┴──────────────┘
-   NB. extension
-   identify PC_location adjacent_ZYX NORTH
-3
-)
-
-direct=: DIRECTION_ZYX i. ]
-
-passage=: { WAYS"_
-   
 PC_location=: 0 	NB. player-character initial location is the starting room
                     NB. (denoted by index into items of inverted table PLACE)
 PC_stuff=: STUFF_none
 
-
-
-boxIfOpen=: <^:(L. = 0:)
-
-   
-Note 'example (differentials in passageways to, and back)'
-   PC_location wayandback WEST
-0 0 0 0 1 0
-0 0 0 0 0 1
-)
