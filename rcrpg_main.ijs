@@ -10,8 +10,8 @@ rcrpg=: 3 : 0
 
 TOOK_STUFF               =: 'You are now carrying that stuff.'
 TOOK_NOTHING             =: 'There was nothing to take.'
-ROOM_NAMED               =: 'This room now has that name.'
-PASSAGEWAY_DUG           =: 'You dug a new passage.'
+NAMED_THE_ROOM           =: 'This room now has that name.'
+DUG_THE_PASSAGEWAY       =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
 ERROR                    =: 'An error condition occurred.'
@@ -37,7 +37,7 @@ take=: 3 : 0
 
 name_room=: 3 : 0
  'names' alter (s: '*',y) PC_location} NAMES
- 0[report ROOM_NAMED
+ 0[report NAMED_THE_ROOM
 )
 
 dig=: 3 : 0
@@ -48,7 +48,7 @@ dig=: 3 : 0
  NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
  if. NO_PRIOR_PASSAGE do.
    'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
-   report PASSAGEWAY_DUG
+   report DUG_THE_PASSAGEWAY
  else.
    report CANNOT_DIG_ALREADY_EXISTS
  end.
