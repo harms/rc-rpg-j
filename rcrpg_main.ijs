@@ -5,12 +5,18 @@ rcrpg=: 3 : 0
    smoutput LF,'RCRPG'
    RCRPG_PLAY=: 0
  end.
- 'The Rosetta Code RPG has ended play.'
+ 'Thank you for playing Rosetta Code RPG in J.'
 )
 
-PASSAGEWAY_DUG=: 'You dug a new passage.'
+ROOM_NAMED               =: 'This room now has that named.'
+PASSAGEWAY_DUG           =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
+
+name_room=: 3 : 0
+ 'names' alter WAY +. DELTA (locate FROM,:TO)} WAY
+ report ROOM_NAMED
+)
 
 dig=: 3 : 0
  FROM=. zyx PC_location
@@ -37,18 +43,21 @@ assure_room=: 3 : 0
  0
 )
 
+PLACE_qualities=: ;:'coordinates passageways stuff names'
+
 alter=: 4 : 0
- select. x 
-   case. 'coordinates' do. 0[ PLACE=: (boxIfOpen y) 0} PLACE
-   case. 'passageways' do. 0[ PLACE=: (boxIfOpen y) 1} PLACE
-   case. do. 1
+ COLUMN=. PLACE_qualities i. <x
+ FOUND=. COLUMN < # PLACE_qualities
+ if. FOUND do.
+   PLACE=: (boxIfOpen y) COLUMN} PLACE
+   update PLACE
+   0 return.
+ else. 1
  end.
- update PLACE
 )
 
 update=: 3 : 0
- WAY=: > 1 { PLACE
- ZYX=: > 0 { PLACE
+ 'ZYX WAY STUFF NAMES'=: PLACE
  zyx     =: { ZYX"_
  locate  =: ZYX i. ]
  missing =: (# ZYX) = locate
