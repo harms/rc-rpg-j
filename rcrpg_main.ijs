@@ -5,17 +5,39 @@ rcrpg=: 3 : 0
    smoutput LF,'RCRPG'
    RCRPG_PLAY=: 0
  end.
- 'Thank you for playing Rosetta Code RPG in J.'
+ 'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
 
+ERROR                    =: 'An error condition occurred.'
+TOOK_STUFF               =: 'You are carrying that stuff.'
+TOOK_NOTHING             =: 'There was nothing to take.'
 ROOM_NAMED               =: 'This room now has that name.'
 PASSAGEWAY_DUG           =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
+log=: 3 :' smoutput ''Log entry: '', y '
+
+take=: 3 : 0
+ 'ALL NOTFOUND'=. _1 0+# OPTIONS=. STUFF_names, <'all'
+ OPTED=. OPTIONS i. <y
+ AVAILABLE=. PC_location { STUFF
+ select. OPTED
+   case. NOTFOUND do. 1[log ERROR return.
+   case. ALL do. GATHERED=. AVAILABLE
+   case. do.     GATHERED=. AVAILABLE * 1 OPTED} STUFF_none
+ end.
+ if. 0=+/GATHERED do.
+   -0[report TOOK_NOTHING return.
+ end.
+ REMAINDER=. AVAILABLE - GATHERED
+ 'stuff' alter REMAINDER PC_location} STUFF
+ PC_stuff=: PC_stuff + GATHERED
+ 0[report TOOK_STUFF
+)
 
 name_room=: 3 : 0
- 'names' alter (s: '*',y) PC_location } NAMES
- report ROOM_NAMED
+ 'names' alter (s: '*',y) PC_location} NAMES
+ 0[report ROOM_NAMED
 )
 
 dig=: 3 : 0
@@ -52,7 +74,7 @@ alter=: 4 : 0
    PLACE=: (boxIfOpen y) COLUMN} PLACE
    update PLACE
    0 return.
- else. 1
+ else. 1[log ERROR
  end.
 )
 
@@ -66,9 +88,9 @@ update=: 3 : 0
 
 
 'maybe delete this code' 1 : 0
-STUFF=: ;: 'sledge ladder gold'
-STUFF_none=: (#STUFF)#0
-spot=: 3 :'(1) (STUFF i. y) } STUFF_none '
+STUFF_names=: ;: 'sledge ladder gold'
+STUFF_none=: (#STUFF_names)#0
+spot=: 3 :'(1) (STUFF_names i. y) } STUFF_none '
 Sledge=: 1 :' (spot <''sledge'') * +/,m '
 Ladder=: 1 :' (spot <''ladder'') * +/,m '
 Gold=:   1 :' (spot <''gold''  ) * +/,m '
