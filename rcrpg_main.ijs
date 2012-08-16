@@ -8,13 +8,13 @@ rcrpg=: 3 : 0
  'Thank you for playing Rosetta Code RPG in J.'
 )
 
-ROOM_NAMED               =: 'This room now has that named.'
+ROOM_NAMED               =: 'This room now has that name.'
 PASSAGEWAY_DUG           =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
 
 name_room=: 3 : 0
- 'names' alter WAY +. DELTA (locate FROM,:TO)} WAY
+ 'names' alter (s: '*',y) PC_location } NAMES
  report ROOM_NAMED
 )
 
@@ -60,7 +60,6 @@ update=: 3 : 0
  'ZYX WAY STUFF NAMES'=: PLACE
  zyx     =: { ZYX"_
  locate  =: ZYX i. ]
- missing =: (# ZYX) = locate
  0
 )
 
@@ -86,6 +85,8 @@ DIRECTION_LABELS =: s: DIRECTIONS
 DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 (toupper DIRECTIONS)=: DIRECTION_ZYX
 NB. DIRECTION_LABELS ,&<"_1 DIRECTION_ZYX
+
+ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
 
 
 SEALED=: 6$0
@@ -114,18 +115,10 @@ PC_location=: 0 	NB. player-character initial location is the starting room
                     NB. (denoted by index into items of inverted table PLACE)
 PC_stuff=: STUFF_none
 
-identify=: locate [ generate_room^:missing
 
-generate_room=: 3 : 0
- CONTENTS=. ([: +/ 0=?)&> (2#9);(3#8);(8#5)
- PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
- update PLACE
- {:&.> PLACE
-)
 
 boxIfOpen=: <^:(L. = 0:)
 
-ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
    
 Note 'example (differentials in passageways to, and back)'
    PC_location wayandback WEST
