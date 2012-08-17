@@ -2,11 +2,10 @@ NB. rcrpg_model_action.ijs
 
 equip=: 3 : 0
  CHOSEN=. STUFF_names i. <y
- if. CHOSEN=#STUFF_names do. 1[log ERROR return. end.
- 
- if. 0= CHOSEN { PC_stuff do.
+ if. CHOSEN=#STUFF_names do. 1[log ERROR return.  
+ elseif. 0= CHOSEN { PC_stuff do.
    0[report NOTHING_TO_EQUIP
- else.
+ elseif. do.
    PC_equipped=: 1 CHOSEN} STUFF_none
    0[report EQUIPPED_IT
  end.
