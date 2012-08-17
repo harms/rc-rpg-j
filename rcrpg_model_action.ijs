@@ -1,5 +1,17 @@
 NB. rcrpg_model_action.ijs
 
+equip=: 3 : 0
+ CHOSEN=. STUFF_names i. <y
+ if. CHOSEN=#STUFF_names do. 1[log ERROR return. end.
+ 
+ if. 0= CHOSEN { PC_stuff do.
+   0[report NOTHING_TO_EQUIP
+ else.
+   PC_equipped=: 1 CHOSEN} STUFF_none
+   0[report EQUIPPED_IT
+ end.
+)
+
 take_load=: 3 : 0
  SOURCE=. PC_location { STUFF
  0[load_stuff y; 1; SOURCE; TOOK_STUFF; TOOK_NOTHING
@@ -8,6 +20,8 @@ take_load=: 3 : 0
 drop_load=: 3 : 0
  SOURCE=. PC_stuff
  0[load_stuff y; _1; SOURCE; DROPPED_STUFF; DROPPED_NOTHING
+NB. FLAW IDENTIFIED:
+NB. If item is dropped and that type of item is equipped, the equipped item should be treated as the one dropped.
 )
 
 load_stuff=: 3 : 0
@@ -26,6 +40,10 @@ load_stuff=: 3 : 0
  'stuff' alter REMAINDER PC_location} STUFF
  PC_stuff=: PC_stuff + GATHERED
  0[report SUCCESS
+ if. (FLOW=_1) *. +./ PC_equipped *. | GATHERED do.
+   PC_equipped=: STUFF_none
+   0[report DROPPED_EQUIPPED
+ end.
 )
 
 name_room=: 3 : 0
