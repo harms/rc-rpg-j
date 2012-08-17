@@ -2,11 +2,13 @@ NB. rcrpg_main.ijs
 
 boxIfOpen=: <^:(L. = 0:)
 
+NB. Next two lines facilitate having the whole group of rcrpg scripts
+NB. in the same directory as rcrpg_main.ijs, wherever it may be.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
-SCRIPTPATH=: ;}:}:;:>lcd''
-load SCRIPTPATH, 'rcrpg_view.ijs'
-load SCRIPTPATH, 'rcrpg_model_action.ijs'
-load SCRIPTPATH, 'rcrpg_model_initialize.ijs'
+SCRIPT_PATH=: ;}:}:;:>lcd''
+load SCRIPT_PATH, 'rcrpg_view.ijs'
+load SCRIPT_PATH, 'rcrpg_model_action.ijs'
+load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
 
 rcrpg=: 3 : 0
  RCRPG_PLAY=: 1

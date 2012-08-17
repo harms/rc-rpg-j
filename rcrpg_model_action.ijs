@@ -20,8 +20,6 @@ take_load=: 3 : 0
 drop_load=: 3 : 0
  SOURCE=. PC_stuff
  0[load_stuff y; _1; SOURCE; DROPPED_STUFF; DROPPED_NOTHING
-NB. FLAW IDENTIFIED:
-NB. If item is dropped and that type of item is equipped, the equipped item should be treated as the one dropped.
 )
 
 load_stuff=: 3 : 0
@@ -36,8 +34,8 @@ load_stuff=: 3 : 0
  if. 0=+/GATHERED do.
    0[report FAILURE return.
  end.
- REMAINDER=. AVAILABLE - GATHERED
- 'stuff' alter REMAINDER PC_location} STUFF
+ ROOM_CONTENTS=. (PC_location { STUFF) - GATHERED
+ 'stuff' alter ROOM_CONTENTS PC_location} STUFF
  PC_stuff=: PC_stuff + GATHERED
  0[report SUCCESS
  if. (FLOW=_1) *. +./ PC_equipped *. | GATHERED do.
