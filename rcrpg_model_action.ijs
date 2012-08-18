@@ -1,8 +1,21 @@
 NB. rcrpg_model_action.ijs
 
+move=: 3 : 0
+ DIRECTION=. y
+ PASSAGE_EXISTS=. (PC_location { WAY) ( -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
+ if. PASSAGE_EXISTS do.
+   PC_location=: locate DIRECTION + zyx PC_location
+   report MOVED_THAT_WAY
+ else.
+   report NO_PASSAGE_THAT_WAY
+ end.
+ 0
+)
+
 equip=: 3 : 0
  CHOSEN=. STUFF_names i. <y
- if. CHOSEN=#STUFF_names do. 1[log ERROR return.  
+ if. CHOSEN=#STUFF_names do.
+   1[log ERROR return.  
  elseif. 0= CHOSEN { PC_stuff do.
    0[report NOTHING_TO_EQUIP
  elseif. do.
@@ -78,8 +91,7 @@ alter=: 4 : 0
  FOUND=. COLUMN < # PLACE_qualities
  if. FOUND do.
    PLACE=: (boxIfOpen y) COLUMN} PLACE
-   update PLACE
-   0 return.
+   0[update PLACE
  else. 
    1[log ERROR
  end.

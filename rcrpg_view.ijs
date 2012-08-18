@@ -1,5 +1,7 @@
 NB. rcrpg_view.ijs
 
+MOVED_THAT_WAY           =: 'You moved one room in that direction.'
+NO_PASSAGE_THAT_WAY      =: 'You did not move. There is no passage that way.'
 TOOK_STUFF               =: 'You are now carrying that stuff.'
 TOOK_NOTHING             =: 'There was nothing to take.'
 DROPPED_STUFF            =: 'You dropped that stuff.'
