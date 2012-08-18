@@ -2,14 +2,20 @@ NB. rcrpg_model_action.ijs
 
 move=: 3 : 0
  DIRECTION=. y
- PASSAGE_EXISTS=. (PC_location { WAY) ( -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
+ PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
  if. PASSAGE_EXISTS do.
    PC_location=: locate DIRECTION + zyx PC_location
    report MOVED_THAT_WAY
+   enter_room PC_location
  else.
    report NO_PASSAGE_THAT_WAY
  end.
  0
+)
+
+enter_room=: 3 : 0
+ tell_room_coordinates y
+ tell_room_contents y
 )
 
 equip=: 3 : 0

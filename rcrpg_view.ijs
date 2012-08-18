@@ -19,23 +19,48 @@ say_carrying=: 'You are carrying '&, @ ,&'.'
 NOT_CARRYING=: 'You are not carrying anything.'
 say_equipped=: 'You are equipped with a '&, @ ,&'.'
 NOT_EQUIPPED=: 'You have no item equipped.'
+say_contains=: 'In the room you see '&, @ ,&'.'
+ROOM_IS_EMPTY=: 'You find nothing of value in the room.'
 GOLD_ITEM=: ' piece'
+list_stuff=: 3 : 0
+ NUMERIC_PORTION=. ,&' '@":&.> |: ,: THIS_STUFF=. y
+ SUFFIXES=. (*y) {"0 1 PLURAL_OPTION
+ WORD_PORTION=. STUFF_names ,.&(|:@:,:) SUFFIXES
+ stream_text=. [:($~ #-2:)[:; <@:,&', '@:;"1
+ stream_text NUMERIC_PORTION,.WORD_PORTION
+)
 
 inventory=: 3 : 0
  if. 0=+/PC_stuff do.
    report NOT_CARRYING
  else.
-   NUMERIC_PORTION=. ,&' '@":&.> |: ,: PC_stuff
-   SUFFIXES=: PC_stuff {"0 1 PLURAL_OPTION
-   WORD_PORTION=. STUFF_names ,.&(|:@:,:) SUFFIXES
-   stream_text=. [:($~ #-2:)[:; <@:,&', '@:;"1
-   report say_carrying stream_text NUMERIC_PORTION,.WORD_PORTION
+   report say_carrying list_stuff PC_stuff
  end.
-
  if. 0=+/PC_equipped do.
    report NOT_EQUIPPED
  else.
    report say_equipped , > PC_equipped # STUFF_names ,&.> '';'';GOLD_ITEM
+ end.
+ 0
+)
+
+tell_room_coordinates=: 3 : 0
+ report ": zyx y
+)
+
+tell_room_name=: 3 : 0
+ if. -.UNNAMED-: y{NAMES do.
+   report zyx y
+ end.
+ 0
+)
+
+tell_room_contents =: 3 : 0
+ CONTENTS=. y { STUFF
+ if. +/CONTENTS do.
+   report say_contains list_stuff CONTENTS
+ else.
+   report ROOM_IS_EMPTY
  end.
  0
 )

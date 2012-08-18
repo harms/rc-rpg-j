@@ -65,7 +65,6 @@ equip 'sledge'
 PC_stuff
 PC_equipped
 PLACE
-PC_stuff
 drop_load 'sledge'
 PLACE
 PC_stuff
