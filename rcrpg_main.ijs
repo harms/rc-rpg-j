@@ -11,6 +11,7 @@ load SCRIPT_PATH, 'rcrpg_model_action.ijs'
 load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
 
 rcrpg=: 3 : 0
+ resolve_roll y
  RCRPG_PLAY=: 1
  while. RCRPG_PLAY do.
    smoutput LF,'RCRPG'
@@ -19,6 +20,13 @@ rcrpg=: 3 : 0
  'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
 
-
+resolve_roll=: 3 : 0
+ if. +./ (<y) e. ;: 'repeatable ?.' do.
+     roll=: ?.
+   else.
+     roll=: ?
+ end.
+ 0
+)
 
 NB. EOF

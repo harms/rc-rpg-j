@@ -1,9 +1,9 @@
 Note 'examples'
 
-   DIRECTION_ZYX ,.&< |:,:DIRECTION_LABELS
+      DIRECTION_ZYX ,.&< |:,:DIRECTION_LABELS
 ┌────────┬──────┐
-│_1  0  0│`down │
-│ 1  0  0│`up   │
+│_1  0  0│`up   │
+│ 1  0  0│`down │
 │ 0 _1  0│`north│
 │ 0  1  0│`south│
 │ 0  0 _1│`west │
@@ -14,10 +14,10 @@ Note 'examples'
 │sledge│ladder│gold│
 └──────┴──────┴────┘
    PLACE
-┌─────┬───────────┬─────┬──────────────┐
-│0 0 0│0 0 0 0 0 0│1 0 0│`Starting room│
-│5 1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
-└─────┴───────────┴─────┴──────────────┘
+┌───────┬───────────┬─────┬──────────────┐
+│ 0  0 0│0 0 0 0 0 0│1 0 0│`Starting room│
+│_5 _1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
+└───────┴───────────┴─────┴──────────────┘
    take_load 'ladder'
 Reporting: There was nothing to take.
 0
@@ -32,10 +32,7 @@ Reporting: That item is now equipped.
    PC_equipped
 1 0 0
    PLACE
-┌─────┬───────────┬─────┬──────────────┐
-│0 0 0│0 0 0 0 0 0│0 0 0│`Starting room│
-│5 1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
-└─────┴───────────┴─────┴──────────────┘
+XXXXXXXXXXXXXXXXXX
    PC_stuff
 1 0 0
       drop_load 'sledge'
@@ -43,10 +40,7 @@ Reporting: You dropped that stuff.
 Reporting: You dropped the item you had equipped.
 0
    PLACE
-┌─────┬───────────┬─────┬──────────────┐
-│0 0 0│0 0 0 0 0 0│1 0 0│`Starting room│
-│5 1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
-└─────┴───────────┴─────┴──────────────┘
+XXXXXXXXXXXXXXXXXX
    PC_stuff
 0 0 0
    PC_equipped
@@ -80,4 +74,7 @@ dig WEST
 PC_location
 move WEST
 PC_location
+
+load 'C:\Users\user\j64-602-user\myactive\rcrpg\rcrpg_main.ijs'
+resolve_roll '?.'
 )

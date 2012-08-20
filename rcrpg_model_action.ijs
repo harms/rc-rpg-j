@@ -15,7 +15,9 @@ move=: 3 : 0
 
 enter_room=: 3 : 0
  tell_room_coordinates y
+ tell_room_name y
  tell_room_contents y
+ tell_room_passageways y
 )
 
 equip=: 3 : 0
@@ -85,7 +87,7 @@ dig=: 3 : 0
 assure_room=: 3 : 0
  MISSING=. (# ZYX) = ZYX i. y
  if. MISSING do.
-   CONTENTS=. ([: +/ 0=?)&> (2#9);(3#8);(8#5)
+   CONTENTS=. ([: +/ 0=roll)&> (2#9);(3#8);(8#5)
    PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
    update PLACE
  end.

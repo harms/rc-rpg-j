@@ -15,6 +15,7 @@ CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
 report=: 3 :' smoutput ''Reporting: '', y '
 ERROR                    =: 'An error condition occurred.'
 log=: 3 :' smoutput ''Log entry: '', y '
+say_roomname=: '"'&, @ ,&'" is the name of this room."'
 say_carrying=: 'You are carrying '&, @ ,&'.'
 NOT_CARRYING=: 'You are not carrying anything.'
 say_equipped=: 'You are equipped with a '&, @ ,&'.'
@@ -50,12 +51,12 @@ tell_room_coordinates=: 3 : 0
 
 tell_room_name=: 3 : 0
  if. -.UNNAMED-: y{NAMES do.
-   report zyx y
+   report say_roomname ,> 5&s: y{NAMES
  end.
  0
 )
 
-tell_room_contents =: 3 : 0
+tell_room_contents=: 3 : 0
  CONTENTS=. y { STUFF
  if. +/CONTENTS do.
    report say_contains list_stuff CONTENTS
@@ -63,6 +64,10 @@ tell_room_contents =: 3 : 0
    report ROOM_IS_EMPTY
  end.
  0
+)
+
+tell_room_passageways=: 3 : 0
+ report ": y{WAY
 )
 
 NB. STUFF_names_plural is defined in rcrpg_model_initialize.ijs

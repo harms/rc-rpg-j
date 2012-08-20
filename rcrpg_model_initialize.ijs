@@ -16,7 +16,7 @@ Gold=:   1 :' (spot <''gold''  ) * +/,m '
 )
 
 WAYS=: = i. 6
-DIRECTIONS=: ' down up north south west east'
+DIRECTIONS=: ' up down north south west east'
 DIRECTION_LABELS =: s: DIRECTIONS
 DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 (toupper DIRECTIONS)=: DIRECTION_ZYX
@@ -28,13 +28,14 @@ passage=: { WAYS"_
 SEALED=: 6$0
 PLACE=: PLACE_empty=: (0 3$0);(0 6$0);(0 3$0);(0 1$s:'`')
 NB. nix PLACE_empty if it doesn't need to be used elsewhere
-PLACE=: PLACE ,&.> 0 0 0; SEALED; 1 Sledge; s:'`Starting room'
-PLACE=: PLACE ,&.> 5 1 1; SEALED; 9 Gold;   s:'`Prize room'
+PLACE=: PLACE ,&.>  0  0  0; SEALED; 1 Sledge; s:'`Starting room'
+PLACE=: PLACE ,&.> _5 _1  1; SEALED; 9 Gold;   s:'`Prize room'
 update PLACE
 
 PC_location=: 0 	NB. player-character initial location is the starting room
                     NB. (denoted by index into items of inverted table PLACE)
 PC_stuff=: STUFF_none
 PC_equipped=: STUFF_none
+enter_room PC_location
 
 NB. EOF
