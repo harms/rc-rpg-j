@@ -32,15 +32,21 @@ Reporting: That item is now equipped.
    PC_equipped
 1 0 0
    PLACE
-XXXXXXXXXXXXXXXXXX
+┌───────┬───────────┬─────┬──────────────┐
+│ 0  0 0│0 0 0 0 0 0│0 0 0│`Starting room│
+│_5 _1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
+└───────┴───────────┴─────┴──────────────┘
    PC_stuff
 1 0 0
-      drop_load 'sledge'
+   drop_load 'sledge'
 Reporting: You dropped that stuff.
 Reporting: You dropped the item you had equipped.
 0
    PLACE
-XXXXXXXXXXXXXXXXXX
+┌───────┬───────────┬─────┬──────────────┐
+│ 0  0 0│0 0 0 0 0 0│1 0 0│`Starting room│
+│_5 _1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
+└───────┴───────────┴─────┴──────────────┘
    PC_stuff
 0 0 0
    PC_equipped
@@ -52,6 +58,7 @@ Note 'manually executed (and examined) test sequences'
 
 NB. actions involving stuff
 load 'C:\Users\user\j64-602-user\myactive\rcrpg\rcrpg_main.ijs'
+resolve_roll '?.'
 PLACE
 take_load 'ladder'
 take_load 'sledge'
@@ -66,6 +73,7 @@ PC_equipped
 
 NB. actions involving digging and moving
 load 'C:\Users\user\j64-602-user\myactive\rcrpg\rcrpg_main.ijs'
+resolve_roll '?.'
 PLACE
 take_load 'sledge'
 equip 'sledge'
@@ -74,7 +82,15 @@ dig WEST
 PC_location
 move WEST
 PC_location
-
+dig SOUTH
+move SOUTH
+dig EAST
+move EAST
+dig NORTH
+move NORTH
+PC_location
+PLACE
+      
 load 'C:\Users\user\j64-602-user\myactive\rcrpg\rcrpg_main.ijs'
 resolve_roll '?.'
 )

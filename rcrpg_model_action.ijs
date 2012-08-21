@@ -14,8 +14,8 @@ move=: 3 : 0
 )
 
 enter_room=: 3 : 0
- tell_room_coordinates y
  tell_room_name y
+ tell_room_coordinates y
  tell_room_contents y
  tell_room_passageways y
 )
