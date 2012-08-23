@@ -33,23 +33,29 @@ equip=: 3 : 0
 )
 
 take_load=: 3 : 0
- SOURCE=. PC_location { STUFF
- 0[load_stuff y; 1; SOURCE; TOOK_STUFF; TOOK_NOTHING
+ FROM_ROOM=. 1
+ MESSAGES=. TOOK_STUFF; TOOK_NOTHING
+ 0[load_stuff y; FROM_ROOM; (PC_location { STUFF); MESSAGES
 )
 
 drop_load=: 3 : 0
- SOURCE=. PC_stuff
- 0[load_stuff y; _1; SOURCE; DROPPED_STUFF; DROPPED_NOTHING
+ FROM_PC=. _1
+ MESSAGES=. DROPPED_STUFF; DROPPED_NOTHING
+ 0[load_stuff y; FROM_PC; PC_stuff; MESSAGES
 )
 
 load_stuff=: 3 : 0
  'CHOICE FLOW AVAILABLE SUCCESS FAILURE'=. y
- 'ALL NOTFOUND'=. _1 0+# OPTIONS=. STUFF_names, <'all'
- CHOSEN=. OPTIONS i. <CHOICE
+ 'ALL NOTFOUND'=. _1 0+# STUFF_options
+ 'CHOSEN Quantity'=. choose CHOICE
  select. CHOSEN
-   case. NOTFOUND do. 1[log ERROR return.
-   case. ALL do. GATHERED=. FLOW * AVAILABLE
-   case. do.     GATHERED=. FLOW * AVAILABLE * 1 CHOSEN} STUFF_none
+   case. NOTFOUND do.
+     1[log ERROR return.
+   case. ALL do.
+     GATHERED=. FLOW * AVAILABLE
+   case. do.
+     WHICH_STUFF=. 1 CHOSEN} STUFF_none
+     GATHERED=. FLOW * (Quantity `:6 AVAILABLE) * WHICH_STUFF
  end.
  if. 0=+/GATHERED do.
    0[report FAILURE return.
@@ -62,6 +68,18 @@ load_stuff=: 3 : 0
    PC_equipped=: STUFF_none
    0[report DROPPED_EQUIPPED
  end.
+)
+
+choose=: 3 : 0
+ FOUND=. STUFF_options_plurals i. < y
+ if. FOUND < #STUFF_options_plurals do.
+   CHOSEN=. FOUND
+   Quantity=. ''`]
+ else.
+   CHOSEN=. STUFF_options i. < y
+   Quantity=. ''`*
+ end.
+ CHOSEN;<Quantity
 )
 
 name_room=: 3 : 0

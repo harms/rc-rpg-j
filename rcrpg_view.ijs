@@ -50,7 +50,7 @@ tell_room_coordinates=: 3 : 0   NB. TODO improve technique used to format number
 
 tell_room_name=: 3 : 0
  if. -.UNNAMED-: y{NAMES
-   do. report SUFFIX_ROOMNAME,~ in_doublequotes ,> 5&s: y{NAMES
+   do. report SUFFIX_ROOMNAME,~ '"' around ,> 5&s: y{NAMES
  end.
  0
 )
@@ -65,7 +65,7 @@ tell_room_contents=: 3 : 0
 )
 
 tell_room_passageways=: 3 : 0
- EXITS=: |: ,: (y{WAY) # DIRECTION_TEXT
+ EXITS=: |: ,: (y{WAY) # DIRECTION_text
  if.     
    0=#EXITS do. report ROOM_HAS_NO_EXITS
  elseif.
@@ -99,6 +99,6 @@ get_list_punctuation=: 3 : 0
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
 
-in_doublequotes=: '"'&, @ ,&'"'
+around=: [ , ] , [
 
 NB. EOF

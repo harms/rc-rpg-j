@@ -6,6 +6,8 @@ UNNAMED=: s:'`'
 STUFF_names=: ;: 'sledge ladder gold'
 STUFF_names_plural=:  's';   's'; ''
 STUFF_none=: (#STUFF_names)#0
+STUFF_options=: STUFF_names, <'all'
+STUFF_options_plurals=: STUFF_options ,&.> STUFF_names_plural,a:
 
 'maybe delete this code' 1 : 0
 spot=: 3 :' 1 (STUFF_names i. y) } STUFF_none '
@@ -16,8 +18,8 @@ Gold=:   1 :' (spot <''gold''  ) * +/,m '
 
 WAYS=: = i. 6
 DIRECTIONS=: ' up down north south west east'
-DIRECTION_LABELS =: s: DIRECTIONS   NB. perhaps eliminate DIRECTION_LABELS
-DIRECTION_TEXT=: ;: DIRECTIONS
+DIRECTION_labels=: s: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
+DIRECTION_text=: ;: DIRECTIONS
 DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 (toupper DIRECTIONS)=: DIRECTION_ZYX
 
