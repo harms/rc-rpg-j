@@ -69,7 +69,7 @@ recognize=: 3 : 0
  CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
  CMD_alias=. QUOTE_PAIR ; ''`alias ; QUOTE_PAIR
  CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
- CMDS_meta=. (<''`quit); COMMAND_noop=: <''`noOp
+ CMDS_meta=. ''`quit ; COMMAND_noop=: <''`noOp
  COMMANDS=: CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
  COMMAND_tally=: # COMMANDS
  NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
@@ -102,4 +102,4 @@ resolve_roll=: 3 : 0 NB.BAD XXXXXXXXXXXXXXXXXXXXXXXX
  0
 )
 
-play_z_=: rcrpg
+play_z_=: rcrpg_rpg_
