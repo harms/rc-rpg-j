@@ -4,6 +4,8 @@ report=: 3 :' smoutput ''Reporting: '', y '
 log   =: 3 :' smoutput ''Log entry: '', y '
 ERROR                    =: 'An error condition occurred.'
 
+COMMAND_NOT_UNDERSTOOD   =:'That command was not understood.'
+
 ROOM_ID_SUFFIX           =: ' is the position of this room.'
 ROOM_HAS_NO_EXITS        =: 'This room has no exits. Perhaps you can make one?'
 PREFIX_SINGLE_EXIT       =: 'The exit from this room is '
@@ -98,7 +100,3 @@ get_list_punctuation=: 3 : 0
 )
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
-
-around=: [ , ] , [
-
-NB. EOF

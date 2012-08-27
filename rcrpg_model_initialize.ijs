@@ -18,7 +18,7 @@ Gold=:   1 :' (spot <''gold''  ) * +/,m '
 
 WAYS=: = i. 6
 DIRECTIONS=: ' up down north south west east'
-DIRECTION_labels=: s: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
+DIRECTION_labels=: ;: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
 DIRECTION_text=: ;: DIRECTIONS
 DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 (toupper DIRECTIONS)=: DIRECTION_ZYX
@@ -36,5 +36,3 @@ PC_stuff=: STUFF_none
 PC_equipped=: STUFF_none
 PC_location=: 0 	NB. location is an index into items of inverted table PLACE
 enter_room PC_location
-
-NB. EOF

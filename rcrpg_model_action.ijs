@@ -1,7 +1,8 @@
 NB. rcrpg_model_action.ijs
+direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
 
 move=: 3 : 0
- DIRECTION=. y
+ DIRECTION=. direct y
  PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
  if. PASSAGE_EXISTS do.
    PC_location=: locate DIRECTION + zyx PC_location
@@ -18,6 +19,7 @@ enter_room=: 3 : 0
  tell_room_coordinates y
  tell_room_contents y
  tell_room_passageways y
+ 0
 )
 
 equip=: 3 : 0
@@ -32,20 +34,22 @@ equip=: 3 : 0
  end.
 )
 
-take_load=: 3 : 0
+take=: 3 : 0
  FROM_ROOM=. 1
  MESSAGES=. TOOK_STUFF; TOOK_NOTHING
- 0[load_stuff y; FROM_ROOM; (PC_location { STUFF); MESSAGES
+ 0[load_stuff (direct y); FROM_ROOM; (PC_location { STUFF); MESSAGES
 )
 
-drop_load=: 3 : 0
+drop=: 3 : 0
  FROM_PC=. _1
  MESSAGES=. DROPPED_STUFF; DROPPED_NOTHING
- 0[load_stuff y; FROM_PC; PC_stuff; MESSAGES
+ 0[load_stuff (direct y); FROM_PC; PC_stuff; MESSAGES
 )
 
 load_stuff=: 3 : 0
  'CHOICE FLOW AVAILABLE SUCCESS FAILURE'=. y
+smoutput CHOICE
+
  'ALL NOTFOUND'=. _1 0+# STUFF_options
  'CHOSEN Quantity'=. choose CHOICE
  select. CHOSEN
@@ -89,7 +93,7 @@ name_room=: 3 : 0
 
 dig=: 3 : 0
  FROM=. zyx PC_location
- TO=. y + FROM
+ TO=. FROM + direct y
  assure_room TO
  DELTA=. ways/ FROM,:TO
  NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
@@ -103,7 +107,7 @@ dig=: 3 : 0
 )
 
 assure_room=: 3 : 0
- MISSING=. (# ZYX) = ZYX i. y
+ MISSING=. (# ZYX) = ZYX i. direct y
  if. MISSING do.
    CONTENTS=. ([: +/ 0=roll)&> (2#9);(3#8);(8#5)
    PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
@@ -129,5 +133,3 @@ update=: 3 : 0
  locate  =: ZYX i. ]
  0
 )
-
-NB. EOF
