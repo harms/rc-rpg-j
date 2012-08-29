@@ -1,5 +1,5 @@
 NB. rcrpg_main.ijs
-require 'misc'
+require 'misc'   NB. provides the verb 'prompt'
 cocurrent 'rpg'
 
 NB.===========================================================
@@ -14,8 +14,9 @@ NB. general-utility definitions
 boxIfOpen=: <^:(L. = 0:)
 around=: [ , ] , [
 QUOTE_PAIR=:''''''
+roll=: ?
 
-NB. Next two lines facilitate having the whole group of rcrpg scripts
+NB. The next two lines facilitate having the whole group of rcrpg scripts
 NB. in the same directory as rcrpg_main.ijs, wherever it may be.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
 SCRIPT_PATH=: ;}:}:;:>lcd''
@@ -24,15 +25,13 @@ load SCRIPT_PATH, 'rcrpg_model_action.ijs'
 load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
 
 rcrpg=: 3 : 0
- resolve_roll y  NB.TODO FIX OR REMOVE
  smoutput LF,'RCRPG: The tiny Rosetta Code Role-Playing Game'
  RCRPG_PLAY=: 1
  while. RCRPG_PLAY do.
    command prompt '> '
-   select. #>COMMAND_FULL
-     case. 1 do. ACTION `:6 a:
-     case. 2 do. ACTION `:6 (  1 { >COMMAND_FULL)
-     case.   do. ACTION `:3 (0 2 { >COMMAND_FULL)
+   if. 2=#COMMAND_DO
+     do.   ACTION `:6 (  1 { COMMAND_DO)
+     else. ACTION `:3 (0 2 { COMMAND_DO)
    end.
   NB. present REPORT
  end.
@@ -41,40 +40,49 @@ rcrpg=: 3 : 0
 
 command=: 3 : 0
  COMMAND_RAW =: y
- COMMAND_FULL=: < ;: , tolower COMMAND_RAW
- ACTION      =: recognize COMMAND_FULL
-)
-
-pattern=: 3 : 0
- WHICH=. I. ''''= {.&> y
- (<QUOTE_PAIR) WHICH} y
+ COMMAND_DO  =: recognize pair_if_solo ;: , tolower COMMAND_RAW
+ ACTION      =: ((2<#) { ]) COMMAND_DO
+ 0
 )
 
 recognize=: 3 : 0
- ALIAS_INDEX=. ALIASES i. y
- if. ALIAS_INDEX<#ALIASES do.              
-   CMD_INDEX=. ALIAS_INDEX { ALIAS_ASSOC   
+ CMD_INDEX=. COMMANDS i. < pattern dereference_aliases y
+ if. CMD_INDEX=#COMMANDS do.
+   report DID_NOT_UNDERSTAND
+   > COMMAND_noop
  else.
-   CMD_INDEX=. COMMANDS i. pattern&.> y
-   if. CMD_INDEX=#COMMANDS do.
-     report COMMAND_NOT_UNDERSTOOD
-     CMD_INDEX=. COMMANDS i. COMMAND_noop
-   end.
+   > CMD_INDEX { COMMANDS
  end.
- ((2<#) { >) CMD_INDEX { COMMANDS
 )
+
+pattern=: 3 : 0
+ WHICH=. I. (<'''')= {.&.> y
+ (<QUOTE_PAIR) WHICH} y
+)
+
+dereference_aliases=: 3 : 0
+ RECEIVED=. y
+ found=. ] < #@[
+ draw =. [ (>:@] * found) i.
+ pick_in =. [ found i.
+ SUBSTITUTIONS=. (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC
+ ]L:1 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
+)
+
+pair_if_solo=: ]`(,&a:) @. (1=#)
 
 'initialize player commands' 1 : 0
  CMDS_direction=. , { (dig`move) ; <DIRECTION_text
  CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
- CMD_alias=. QUOTE_PAIR ; ''`alias ; QUOTE_PAIR
+ CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
  CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
- CMDS_meta=. ''`quit ; COMMAND_noop=: <''`noOp
- COMMANDS=: CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
+ COMMAND_noop=: <''`noOp NB. embedded capital letter intentionally prevents direct reference by player.
+ CMDS_meta=. ''`quit ; COMMAND_noop
+ COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
  COMMAND_tally=: # COMMANDS
  NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
- ALIASES=: (<;:'west'),(<;:'packing') NB.TEMPORARY
- ALIAS_ASSOC=: 4 25                   NB.TEMPORARY
+ ALIASES=. ;:'t d e'                     NB.TEMPORARY
+ ALIAS_ASSOC=. <"0 ;:'take drop equip'   NB.TEMPORARY
  NB. Actually, should set aliases through the alias command
 )
 
@@ -91,15 +99,6 @@ noOp=: 0:   NB. Avoids "actions" but allows reporting and logging to procede nor
 quit=: 3 : 0
  RCRPG_PLAY=: 0
  report 'Thank you for playing this J implementation of Rosetta Code RPG.'
-)
-
-resolve_roll=: 3 : 0 NB.BAD XXXXXXXXXXXXXXXXXXXXXXXX
- if. +./ (<y) e. ;: 'repeatable ?.' do.
-     roll=: ?.
-   else.
-     roll=: ?
- end.
- 0
 )
 
 play_z_=: rcrpg_rpg_

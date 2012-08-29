@@ -107,7 +107,7 @@ dig=: 3 : 0
 )
 
 assure_room=: 3 : 0
- MISSING=. (# ZYX) = ZYX i. direct y
+ MISSING=. (# ZYX) = ZYX i. y
  if. MISSING do.
    CONTENTS=. ([: +/ 0=roll)&> (2#9);(3#8);(8#5)
    PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
