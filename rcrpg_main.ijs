@@ -3,23 +3,18 @@ require 'misc'   NB. provides the verb 'prompt'
 cocurrent 'rpg'
 
 NB.===========================================================
-NB. At this stage, the obvious problem with list_stuff is also
+NB. At this stage, an obvious problem with list_stuff is also
 NB. part of a larger problem. Taking and dropping was built to
 NB. support both singular and plural, but command-handling
 NB. was built to take single commands (such as "take ladder"
 NB. but not also "take ladders"). Must reconcile.
 NB.===========================================================
 
-NB. general-utility definitions
-boxIfOpen=: <^:(L. = 0:)
-around=: [ , ] , [
-QUOTE_PAIR=:''''''
-roll=: ?
-
 NB. The next two lines facilitate having the whole group of rcrpg scripts
 NB. in the same directory as rcrpg_main.ijs, wherever it may be.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
 SCRIPT_PATH=: ;}:}:;:>lcd''
+load SCRIPT_PATH, 'rcrpg_setup.ijs'
 load SCRIPT_PATH, 'rcrpg_view.ijs'
 load SCRIPT_PATH, 'rcrpg_model_action.ijs'
 load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
@@ -29,9 +24,8 @@ rcrpg=: 3 : 0
  RCRPG_PLAY=: 1
  while. RCRPG_PLAY do.
    command prompt '> '
-   if. 2=#COMMAND_DO
-     do.   ACTION `:6 (  1 { COMMAND_DO)
-     else. ACTION `:3 (0 2 { COMMAND_DO)
+   if.     2=#COMMAND_DO do. ACTION `:6 (  1 { COMMAND_DO)
+   elseif. 3=#COMMAND_DO do. ACTION `:3 (0 2 { COMMAND_DO)
    end.
   NB. present REPORT
  end.
@@ -76,13 +70,13 @@ pair_if_solo=: ]`(,&a:) @. (1=#)
  CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
  CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
  CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
- COMMAND_noop=: <''`noOp NB. embedded capital letter intentionally prevents direct reference by player.
+ COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter intentionally prevents direct reference by player.
  CMDS_meta=. ''`quit ; COMMAND_noop
  COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
  COMMAND_tally=: # COMMANDS
  NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
- ALIASES=. ;:'t d e'                     NB.TEMPORARY
- ALIAS_ASSOC=. <"0 ;:'take drop equip'   NB.TEMPORARY
+ ALIASES=: ;:'t d e'                     NB.TEMPORARY
+ ALIAS_ASSOC=: <"0 ;:'take drop equip'   NB.TEMPORARY
  NB. Actually, should set aliases through the alias command
 )
 

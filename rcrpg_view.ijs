@@ -77,11 +77,6 @@ tell_room_passageways=: 3 : 0
  end.
 )
 
-NB. STUFF_names_plural is defined in rcrpg_model_initialize.ijs
-NB. because it is easier to understand it through direct comparison
-NB. with the words in STUFF_names (which belong there.)
-PLURAL_OPTION=:((,.&|:@:,:) (##<@(''"_))) STUFF_names_plural
-
 list_stuff=: 3 : 0
  if. 1>+/y do. '' return. end.
  NUMERIC_PORTION=. ,&' '@":&.> |: ,: y
