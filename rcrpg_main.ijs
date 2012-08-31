@@ -27,14 +27,14 @@ rcrpg=: 3 : 0
 
 command=: 3 : 0
  COMMAND_RAW =: y
- COMMAND_DO  =: recognize pair_if_solo ~:Quoted tolower ;: , COMMAND_RAW
+ COMMAND_DO  =: recognize pair_if_solo tolower Quoted~: ;: , COMMAND_RAW
  ACTION      =: ((2<#) { ]) COMMAND_DO
  0
 )
 
 recognize=: 3 : 0
  CMD_TO_USE_IF_GOOD=. dereference_aliases y
- CMD_INDEX=. COMMANDS i. < =Quoted (QUOTE_PAIR"_) CMD_TO_USE_IF_GOOD
+ CMD_INDEX=. COMMANDS i. < QUOTE_PAIR"_ Quoted= CMD_TO_USE_IF_GOOD
  if. CMD_INDEX=#COMMANDS do.
    report DID_NOT_UNDERSTAND
    > COMMAND_noop
@@ -44,7 +44,7 @@ recognize=: 3 : 0
 )
 
 Quoted=: 2 : 0
- ( ,. v&.>) {~"_1 [:(<'''')&u {.&.>
+ ( ,. u&.>) {~"_1 [:(<'''')&v {.&.>
 )
 
 dereference_aliases=: 3 : 0

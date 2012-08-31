@@ -3,6 +3,7 @@ NB. rcrpg_setup.ijs
 boxIfOpen=: <^:(L. = 0:)
 around=: [ , ] , [
 QUOTE_PAIR=:''''''
+quotepair=:QUOTE_PAIR"_
 roll=: ?
 
 PLACE_qualities=: ;:'coordinates passageways stuff names'

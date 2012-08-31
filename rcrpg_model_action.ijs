@@ -85,7 +85,6 @@ choose=: 3 : 0
 )
 
 name=: 3 : 0
-smoutput y
  'names' alter (s: '*',dequote y) PC_location} NAMES
  0[report NAMED_THE_ROOM
 )
