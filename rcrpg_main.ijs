@@ -20,7 +20,8 @@ load SCRIPT_PATH, 'rcrpg_model_action.ijs'
 load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
 
 rcrpg=: 3 : 0
- smoutput LF,'RCRPG: The tiny Rosetta Code Role-Playing Game'
+ smoutput INTRODUCTION
+ initializeGameWorld ''
  RCRPG_PLAY=: 1
  while. RCRPG_PLAY do.
    command prompt '> '
@@ -29,7 +30,7 @@ rcrpg=: 3 : 0
    end.
   NB. present REPORT
  end.
- 0 0$0
+ 0$0
 )
 
 command=: 3 : 0

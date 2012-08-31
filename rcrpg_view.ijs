@@ -4,8 +4,12 @@ report=: 3 :' smoutput ''Reporting: '', y '
 log   =: 3 :' smoutput ''Log entry: '', y '
 ERROR                    =: 'An error condition occurred.'
 
-DID_NOT_UNDERSTAND       =:'That command was not understood.'
 
+INTRODUCTION=: 0 : 0
+
+RCRPG: The tiny Rosetta Code Role-Playing Game
+)
+DID_NOT_UNDERSTAND       =: 'That command was not understood.'
 ROOM_ID_SUFFIX           =: ' is the position of this room.'
 ROOM_HAS_NO_EXITS        =: 'This room has no exits. Perhaps you can make one?'
 PREFIX_SINGLE_EXIT       =: 'The exit from this room is '
@@ -22,6 +26,7 @@ NOTHING_TO_EQUIP         =: 'You carry nothing to equip.'
 NAMED_THE_ROOM           =: 'This room now has that name.'
 DUG_THE_PASSAGEWAY       =: 'You dug a new passage.'
 CANNOT_DIG_ALREADY_EXISTS=: 'A passage already has been dug through that wall.'
+CANNOT_DIG_NO_TOOL       =: 'You cannot dig, for you have no digging tool equipped.'
 SUFFIX_ROOMNAME          =: ' is the name of this room.'
 PREFIX_CARRYING          =: 'You are carrying '
 NOT_CARRYING             =: 'You are not carrying anything.'
@@ -38,7 +43,7 @@ inventory=: 3 : 0
  end.
  if. 0=+/PC_equipped
    do.   report NOT_EQUIPPED
-   else. report ,&'.' say_equipped , > PC_equipped # STUFF_names ,&.> '';'';GOLD_ITEM
+   else. report ,&'.' ARE_EQUIPPED , ,> PC_equipped # STUFF_names ,&.> '';'';GOLD_ITEM
  end.
  0
 )
@@ -95,3 +100,8 @@ get_list_punctuation=: 3 : 0
 )
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
+
+help=: 3 : 0
+ report 'No helpful information is available at this time.'
+ 0
+)

@@ -23,7 +23,7 @@ enter_room=: 3 : 0
 )
 
 equip=: 3 : 0
- CHOSEN=. STUFF_names i. <y
+ CHOSEN=. STUFF_names i. y
  if. CHOSEN=#STUFF_names do.
    1[log ERROR return.  
  elseif. 0= CHOSEN { PC_stuff do.
@@ -37,19 +37,17 @@ equip=: 3 : 0
 take=: 3 : 0
  FROM_ROOM=. 1
  MESSAGES=. TOOK_STUFF; TOOK_NOTHING
- 0[load_stuff (direct y); FROM_ROOM; (PC_location { STUFF); MESSAGES
+ 0[load_stuff y; FROM_ROOM; (PC_location { STUFF); MESSAGES
 )
 
 drop=: 3 : 0
  FROM_PC=. _1
  MESSAGES=. DROPPED_STUFF; DROPPED_NOTHING
- 0[load_stuff (direct y); FROM_PC; PC_stuff; MESSAGES
+ 0[load_stuff y; FROM_PC; PC_stuff; MESSAGES
 )
 
 load_stuff=: 3 : 0
  'CHOICE FLOW AVAILABLE SUCCESS FAILURE'=. y
-smoutput CHOICE
-
  'ALL NOTFOUND'=. _1 0+# STUFF_options
  'CHOSEN Quantity'=. choose CHOICE
  select. CHOSEN
@@ -75,12 +73,12 @@ smoutput CHOICE
 )
 
 choose=: 3 : 0
- FOUND=. STUFF_options_plurals i. < y
+ FOUND=. STUFF_options_plurals i. y
  if. FOUND < #STUFF_options_plurals do.
    CHOSEN=. FOUND
    Quantity=. ''`]
  else.
-   CHOSEN=. STUFF_options i. < y
+   CHOSEN=. STUFF_options i. y
    Quantity=. ''`*
  end.
  CHOSEN;<Quantity
@@ -92,16 +90,20 @@ name_room=: 3 : 0
 )
 
 dig=: 3 : 0
- FROM=. zyx PC_location
- TO=. FROM + direct y
- assure_room TO
- DELTA=. ways/ FROM,:TO
- NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
- if. NO_PRIOR_PASSAGE do.
-   'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
-   report DUG_THE_PASSAGEWAY
+ if. PC_equipped includes 1 Sledge do.
+   FROM=. zyx PC_location
+   TO=. FROM + direct y
+   assure_room TO
+   DELTA=. ways/ FROM,:TO
+   NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
+   if. NO_PRIOR_PASSAGE do.
+     'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
+     report DUG_THE_PASSAGEWAY
+   else.
+     report CANNOT_DIG_ALREADY_EXISTS
+   end.
  else.
-   report CANNOT_DIG_ALREADY_EXISTS
+   report CANNOT_DIG_NO_TOOL
  end.
  0
 )
@@ -132,4 +134,8 @@ update=: 3 : 0
  zyx     =: { ZYX"_
  locate  =: ZYX i. ]
  0
+)
+
+includes=: 4 : 0
+ * +/ x * y
 )
