@@ -2,14 +2,6 @@ NB. rcrpg_main.ijs
 require 'misc'   NB. provides the verb 'prompt'
 cocurrent 'rpg'
 
-NB.===========================================================
-NB. At this stage, an obvious problem with list_stuff is also
-NB. part of a larger problem. Taking and dropping was built to
-NB. support both singular and plural, but command-handling
-NB. was built to take single commands (such as "take ladder"
-NB. but not also "take ladders"). Must reconcile.
-NB.===========================================================
-
 NB. The next two lines facilitate having the whole group of rcrpg scripts
 NB. in the same directory as rcrpg_main.ijs, wherever it may be.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
@@ -35,24 +27,24 @@ rcrpg=: 3 : 0
 
 command=: 3 : 0
  COMMAND_RAW =: y
- COMMAND_DO  =: recognize pair_if_solo ;: , tolower COMMAND_RAW
+ COMMAND_DO  =: recognize pair_if_solo ~:Quoted tolower ;: , COMMAND_RAW
  ACTION      =: ((2<#) { ]) COMMAND_DO
  0
 )
 
 recognize=: 3 : 0
- CMD_INDEX=. COMMANDS i. < pattern dereference_aliases y
+ CMD_TO_USE_IF_GOOD=. dereference_aliases y
+ CMD_INDEX=. COMMANDS i. < =Quoted (QUOTE_PAIR"_) CMD_TO_USE_IF_GOOD
  if. CMD_INDEX=#COMMANDS do.
    report DID_NOT_UNDERSTAND
    > COMMAND_noop
  else.
-   > CMD_INDEX { COMMANDS
+   CMD_TO_USE_IF_GOOD
  end.
 )
 
-pattern=: 3 : 0
- WHICH=. I. (<'''')= {.&.> y
- (<QUOTE_PAIR) WHICH} y
+Quoted=: 2 : 0
+ ( ,. v&.>) {~"_1 [:(<'''')&u {.&.>
 )
 
 dereference_aliases=: 3 : 0

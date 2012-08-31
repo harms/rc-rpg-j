@@ -84,8 +84,9 @@ choose=: 3 : 0
  CHOSEN;<Quantity
 )
 
-name_room=: 3 : 0
- 'names' alter (s: '*',y) PC_location} NAMES
+name=: 3 : 0
+smoutput y
+ 'names' alter (s: '*',dequote y) PC_location} NAMES
  0[report NAMED_THE_ROOM
 )
 
@@ -111,7 +112,7 @@ dig=: 3 : 0
 assure_room=: 3 : 0
  MISSING=. (# ZYX) = ZYX i. y
  if. MISSING do.
-   CONTENTS=. ([: +/ 0=roll)&> (2#9);(3#8);(8#5)
+   CONTENTS=. ([: +/ 0=roll)&> (2#11);(3#8);(8#5)
    PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
    update PLACE
  end.
@@ -138,4 +139,8 @@ update=: 3 : 0
 
 includes=: 4 : 0
  * +/ x * y
+)
+
+dequote=: 3 : 0
+ (#~ ''''~:]) > y
 )
