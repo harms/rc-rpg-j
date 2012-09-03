@@ -1,15 +1,15 @@
 NB. rcrpg_main.ijs
 require 'misc'   NB. provides the verb 'prompt'
-cocurrent 'rpg'
+cocurrent 'rcrpg'
 
 NB. The next two lines facilitate having the whole group of rcrpg scripts
 NB. in the same directory as rcrpg_main.ijs, wherever it may be.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
 SCRIPT_PATH=: ;}:}:;:>lcd''
 load SCRIPT_PATH, 'rcrpg_setup.ijs'
+load SCRIPT_PATH, 'rcrpg_model.ijs'
 load SCRIPT_PATH, 'rcrpg_view.ijs'
-load SCRIPT_PATH, 'rcrpg_model_action.ijs'
-load SCRIPT_PATH, 'rcrpg_model_initialize.ijs'
+load SCRIPT_PATH, 'rcrpg_actions.ijs'
 
 rcrpg=: 3 : 0
  smoutput INTRODUCTION
@@ -43,10 +43,6 @@ recognize=: 3 : 0
  end.
 )
 
-Quoted=: 2 : 0
- ( ,. u&.>) {~"_1 [:(<'''')&v {.&.>
-)
-
 dereference_aliases=: 3 : 0
  RECEIVED=. y
  found=. ] < #@[
@@ -56,29 +52,12 @@ dereference_aliases=: 3 : 0
  ]L:1 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
 )
 
-pair_if_solo=: ]`(,&a:) @. (1=#)
-
-'initialize player commands' 1 : 0
- CMDS_direction=. , { (dig`move) ; <DIRECTION_text
- CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
- CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
- CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
- COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter intentionally prevents direct reference by player.
- CMDS_meta=. ''`quit ; COMMAND_noop
- COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
- COMMAND_tally=: # COMMANDS
- NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
- ALIASES=: ;:'t d e'                     NB.TEMPORARY
- ALIAS_ASSOC=: <"0 ;:'take drop equip'   NB.TEMPORARY
- NB. Actually, should set aliases through the alias command
-)
-
 alias=: 4 : 0
  if. -. (,:x) -: ;: > x do.
-   smoutput $;:>x
+   smoutput $;:>x NB.TODO TEMPORARY
    1[report ALIAS_MUST_PARSE_AS_SINGLE_TOKEN return.  
  end.
- 99
+ 99 NB.TODO TEMPORARY
 )
 
 noOp=: 0:   NB. Avoids "actions" but allows reporting and logging to procede normally.
@@ -88,4 +67,4 @@ quit=: 3 : 0
  report 'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
 
-play_z_=: rcrpg_rpg_
+play_z_=: rcrpg_rcrpg_

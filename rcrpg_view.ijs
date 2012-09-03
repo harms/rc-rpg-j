@@ -4,7 +4,6 @@ report=: 3 :' smoutput ''Reporting: '', y '
 log   =: 3 :' smoutput ''Log entry: '', y '
 ERROR                    =: 'An error condition occurred.'
 
-
 INTRODUCTION=: 0 : 0
 
 RCRPG: The tiny Rosetta Code Role-Playing Game
@@ -35,18 +34,6 @@ NOT_EQUIPPED             =: 'You have no item equipped.'
 PREFIX_CONTAINS          =: 'In the room you see '
 ROOM_IS_EMPTY            =: 'You find nothing of value in the room.'
 GOLD_ITEM                =: ' piece'
-
-inventory=: 3 : 0
- if. 0=+/PC_stuff
-   do.   report NOT_CARRYING
-   else. report PREFIX_CARRYING, list_stuff PC_stuff
- end.
- if. 0=+/PC_equipped
-   do.   report NOT_EQUIPPED
-   else. report ,&'.' ARE_EQUIPPED , ,> PC_equipped # STUFF_names ,&.> '';'';GOLD_ITEM
- end.
- 0
-)
 
 tell_room_coordinates=: 3 : 0   NB. TODO improve technique used to format number with - instead of _
  NUMTXT=. ": zyx y
@@ -100,8 +87,3 @@ get_list_punctuation=: 3 : 0
 )
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
-
-help=: 3 : 0
- report 'No helpful information is available at this time.'
- 0
-)

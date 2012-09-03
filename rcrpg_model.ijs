@@ -1,17 +1,15 @@
-NB. rcrpg_model_action.ijs
-direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
+NB. rcrpg_model.ijs
 
-move=: 3 : 0
- DIRECTION=. direct y
- PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
- if. PASSAGE_EXISTS do.
-   PC_location=: locate DIRECTION + zyx PC_location
-   report MOVED_THAT_WAY
-   enter_room PC_location
- else.
-   report NO_PASSAGE_THAT_WAY
- end.
- 0
+initializeGameWorld=: 3 : 0
+ SEALED=. 6$0
+ PLACE=: (0 3$0);(0 6$0);(0 3$0);(0 1$s:'`')
+ PLACE=: PLACE ,&.>  0  0  0; SEALED; 1 Sledge; s:'`Starting room'
+ PLACE=: PLACE ,&.> _5 _1  1; SEALED; 9 Gold;   s:'`Prize room'
+ update PLACE
+
+ PC_equipped=: PC_stuff=: STUFF_none
+ PC_location=: 0 	NB. location is an index into items of PLACE
+ enter_room PC_location
 )
 
 enter_room=: 3 : 0
@@ -22,28 +20,11 @@ enter_room=: 3 : 0
  0
 )
 
-equip=: 3 : 0
- CHOSEN=. STUFF_names i. y
- if. CHOSEN=#STUFF_names do.
-   1[log ERROR return.  
- elseif. 0= CHOSEN { PC_stuff do.
-   0[report NOTHING_TO_EQUIP
- elseif. do.
-   PC_equipped=: 1 CHOSEN} STUFF_none
-   0[report EQUIPPED_IT
- end.
-)
+direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
 
-take=: 3 : 0
- FROM_ROOM=. 1
- MESSAGES=. TOOK_STUFF; TOOK_NOTHING
- 0[load_stuff y; FROM_ROOM; (PC_location { STUFF); MESSAGES
-)
-
-drop=: 3 : 0
- FROM_PC=. _1
- MESSAGES=. DROPPED_STUFF; DROPPED_NOTHING
- 0[load_stuff y; FROM_PC; PC_stuff; MESSAGES
+has_no_passage_to=: 3 : ' -. has_passage_to y '
+has_passage_to   =: 3 : 0
+ +./ (PC_location { WAY) *. WAYS {~ DIRECTION_text i. y
 )
 
 load_stuff=: 3 : 0
@@ -84,30 +65,6 @@ choose=: 3 : 0
  CHOSEN;<Quantity
 )
 
-name=: 3 : 0
- 'names' alter (s: '*',dequote y) PC_location} NAMES
- 0[report NAMED_THE_ROOM
-)
-
-dig=: 3 : 0
- if. PC_equipped includes 1 Sledge do.
-   FROM=. zyx PC_location
-   TO=. FROM + direct y
-   assure_room TO
-   DELTA=. ways/ FROM,:TO
-   NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
-   if. NO_PRIOR_PASSAGE do.
-     'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
-     report DUG_THE_PASSAGEWAY
-   else.
-     report CANNOT_DIG_ALREADY_EXISTS
-   end.
- else.
-   report CANNOT_DIG_NO_TOOL
- end.
- 0
-)
-
 assure_room=: 3 : 0
  MISSING=. (# ZYX) = ZYX i. y
  if. MISSING do.
@@ -143,3 +100,4 @@ includes=: 4 : 0
 dequote=: 3 : 0
  (#~ ''''~:]) > y
 )
+
