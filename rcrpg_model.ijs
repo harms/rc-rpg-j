@@ -1,7 +1,7 @@
 NB. rcrpg_model.ijs
 
 initializeGameWorld=: 3 : 0
- SEALED=. 6$0
+ SEALED=: 6$0
  PLACE=: (0 3$0);(0 6$0);(0 3$0);(0 1$s:'`')
  PLACE=: PLACE ,&.>  0  0  0; SEALED; 1 Sledge; s:'`Starting room'
  PLACE=: PLACE ,&.> _5 _1  1; SEALED; 9 Gold;   s:'`Prize room'
@@ -22,8 +22,20 @@ enter_room=: 3 : 0
 
 direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
 
-has_no_passage_to=: 3 : 0
- -. +./ (PC_location { WAY) *. WAYS {~ DIRECTION_text i. zyx y
+includes=: 4 : 0
+ * +/ x * y
+)
+
+has_no_passage_to=: 4 : 0
+ -. +./ (x { WAY) *. WAYS {~ DIRECTION_text i. y
+)
+
+make_passageway=: 4 : 0
+ FROM=. zyx x
+ TO=. FROM + direct y
+ assure_room TO
+ DELTA=. ways/ FROM,:TO
+ 'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
 )
 
 load_stuff=: 3 : 0
@@ -90,10 +102,6 @@ update=: 3 : 0
  zyx     =: { ZYX"_
  locate  =: ZYX i. ]
  0
-)
-
-includes=: 4 : 0
- * +/ x * y
 )
 
 dequote=: 3 : 0

@@ -45,23 +45,14 @@ name=: 3 : 0
 )
 
 dig=: 3 : 0
- if. PC_equipped includes 1 Sledge
-   do. CAN_DIG=. 1
-   else. report CANNOT_DIG_NO_TOOL
- end.
- if. PC_location has_no_passage_to y
-   do. CAN_DIG=. CAN_DIG *. 1
-   else. report CANNOT_DIG_ALREADY_EXISTS
- end.
- if. CAN_DIG do.
-   FROM=. zyx PC_location
-   TO=. FROM + direct y
-   assure_room TO
-   DELTA=. ways/ FROM,:TO
-   'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
-   report DUG_THE_PASSAGEWAY
- end.
- 0
+ HAS_TOOL=. PC_equipped includes 1 Sledge
+ NO_HOLE=. PC_location has_no_passage_to DIRECTION_said=. y
+ CRITERIA=. HAS_TOOL, NO_HOLE
+ fail_tool=. 4 : ' report CANNOT_DIG_NO_TOOL '
+ fail_hole=. 4 : ' report CANNOT_DIG_ALREADY_EXISTS '
+ succeed=. 4 : ' report DUG_THE_PASSAGEWAY label_1. x make_passageway y '
+ resolve=. (fail_tool,fail_hole)`fail_tool`fail_hole`succeed {~ ([:I. (#:i.4) -:"1 _ ])
+ PC_location (resolve CRITERIA)`:6 DIRECTION_said
 )
 
 NB. actions focused on the view:
