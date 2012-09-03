@@ -45,20 +45,21 @@ name=: 3 : 0
 )
 
 dig=: 3 : 0
- if. PC_equipped includes 1 Sledge do.
+ if. PC_equipped includes 1 Sledge
+   do. CAN_DIG=. 1
+   else. report CANNOT_DIG_NO_TOOL
+ end.
+ if. PC_location has_no_passage_to y
+   do. CAN_DIG=. CAN_DIG *. 1
+   else. report CANNOT_DIG_ALREADY_EXISTS
+ end.
+ if. CAN_DIG do.
    FROM=. zyx PC_location
    TO=. FROM + direct y
    assure_room TO
    DELTA=. ways/ FROM,:TO
-   NO_PRIOR_PASSAGE=. 0 -: */ , DELTA *. (locate FROM,:TO) { WAY
-   if. NO_PRIOR_PASSAGE do.
-     'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
-     report DUG_THE_PASSAGEWAY
-   else.
-     report CANNOT_DIG_ALREADY_EXISTS
-   end.
- else.
-   report CANNOT_DIG_NO_TOOL
+   'passageways' alter WAY +. DELTA (locate FROM,:TO)} WAY
+   report DUG_THE_PASSAGEWAY
  end.
  0
 )

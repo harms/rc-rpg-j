@@ -22,9 +22,8 @@ enter_room=: 3 : 0
 
 direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
 
-has_no_passage_to=: 3 : ' -. has_passage_to y '
-has_passage_to   =: 3 : 0
- +./ (PC_location { WAY) *. WAYS {~ DIRECTION_text i. y
+has_no_passage_to=: 3 : 0
+ -. +./ (PC_location { WAY) *. WAYS {~ DIRECTION_text i. zyx y
 )
 
 load_stuff=: 3 : 0
