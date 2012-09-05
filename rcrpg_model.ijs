@@ -26,6 +26,12 @@ includes=: 4 : 0
  * +/ x * y
 )
 
+resolve=: 4 : 0
+ POSSIBLE=. x
+ ACTUAL=. y
+ (I. (#:i.#POSSIBLE) -:"1 _ ACTUAL) { POSSIBLE
+)
+
 has_no_passage_to=: 4 : 0
  -. +./ (x { WAY) *. WAYS {~ DIRECTION_text i. y
 )

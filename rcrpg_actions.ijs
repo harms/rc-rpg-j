@@ -50,9 +50,9 @@ dig=: 3 : 0
  CRITERIA=. HAS_TOOL, NO_HOLE
  fail_tool=. 4 : ' report CANNOT_DIG_NO_TOOL '
  fail_hole=. 4 : ' report CANNOT_DIG_ALREADY_EXISTS '
- succeed=. 4 : ' report DUG_THE_PASSAGEWAY label_1. x make_passageway y '
- resolve=. (fail_tool,fail_hole)`fail_tool`fail_hole`succeed {~ ([:I. (#:i.4) -:"1 _ ])
- PC_location (resolve CRITERIA)`:6 DIRECTION_said
+ succeed  =. 4 : ' report DUG_THE_PASSAGEWAY label_here. x make_passageway y '
+ Possibilities=. (fail_tool,fail_hole)`fail_tool`fail_hole`succeed
+ PC_location (Possibilities resolve CRITERIA)`:6 DIRECTION_said
 )
 
 NB. actions focused on the view:
