@@ -28,7 +28,7 @@ includes=: 4 : 0
 
 resolve=: 4 : 0
  POSSIBLE=. x
- ACTUAL=. y
+ ACTUAL=. y 
  (I. (#:i.#POSSIBLE) -:"1 _ ACTUAL) { POSSIBLE
 )
 

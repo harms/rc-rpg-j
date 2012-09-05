@@ -3,16 +3,14 @@ NB. rcrpg_actions.ijs
 NB. actions focused on the model:
 
 move=: 3 : 0
- DIRECTION=. direct y
- PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. DIRECTION
- if. PASSAGE_EXISTS do.
-   PC_location=: locate DIRECTION + zyx PC_location
-   report MOVED_THAT_WAY
-   enter_room PC_location
- else.
-   report NO_PASSAGE_THAT_WAY
- end.
- 0
+ PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. direct y
+ LADDER_AND_CLIMBING=. (1 Ladder +/@:* PC_location { STUFF) +. NOT_CLIMBING=. -. y -: {.DIRECTION_text
+ CRITERIA=. PASSAGE_EXISTS, LADDER_AND_CLIMBING
+ fail_NoWay   =. 3 : ' report NO_PASSAGE_THAT_WAY '
+ fail_NoLadder=. 3 : ' report NO_LADDER_SET_TO_CLIMB '
+ succeed      =. 3 : ' report MOVED_THAT_WAY label_1. PC_location=: locate (direct y) + zyx PC_location label_2. enter_room PC_location '
+ Possibilities=. (fail_NoWay,fail_NoLadder) ` fail_NoWay ` fail_NoLadder ` succeed
+ (Possibilities resolve CRITERIA)`:6 y
 )
 
 equip=: 3 : 0
@@ -51,7 +49,7 @@ dig=: 3 : 0
  fail_tool=. 4 : ' report CANNOT_DIG_NO_TOOL '
  fail_hole=. 4 : ' report CANNOT_DIG_ALREADY_EXISTS '
  succeed  =. 4 : ' report DUG_THE_PASSAGEWAY label_here. x make_passageway y '
- Possibilities=. (fail_tool,fail_hole)`fail_tool`fail_hole`succeed
+ Possibilities=. (fail_tool,fail_hole) ` fail_tool ` fail_hole ` succeed
  PC_location (Possibilities resolve CRITERIA)`:6 DIRECTION_said
 )
 

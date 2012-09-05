@@ -13,15 +13,15 @@ Quoted=: 2 : 0
 PLACE_qualities=: ;:'coordinates passageways stuff names'
 UNNAMED=: s:'`'
 
-WAYS=: = i. 6
-ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
-passage=: { WAYS"_
-
 DIRECTIONS=: ' up down north south west east'
 DIRECTION_labels=: ;: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
 DIRECTION_text=: ;: DIRECTIONS
 DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
 (toupper DIRECTIONS)=: DIRECTION_ZYX
+
+WAYS=: = i. 6
+ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
+passage=: { WAYS"_
 
 STUFF_names=: ;: 'sledge ladder gold'
 STUFF_names_plural=:  's';   's'; ''
