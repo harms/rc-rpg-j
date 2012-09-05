@@ -13,11 +13,11 @@ Quoted=: 2 : 0
 PLACE_qualities=: ;:'coordinates passageways stuff names'
 UNNAMED=: s:'`'
 
-DIRECTIONS=: ' up down north south west east'
+DIRECTIONS      =: ' up down north south west east'
 DIRECTION_labels=: ;: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
-DIRECTION_text=: ;: DIRECTIONS
-DIRECTION_ZYX=: ( *  _1 1 $~ #) 2# = i. 3
-(toupper DIRECTIONS)=: DIRECTION_ZYX
+DIRECTION_text  =: ;: DIRECTIONS
+DIRECTION_up    =: {. DIRECTION_text
+DIRECTION_ZYX   =: ( *  _1 1 $~ #) 2# = i. 3
 
 WAYS=: = i. 6
 ways=: WAYS {~ DIRECTION_ZYX i. (- ,: -~)/ @: (,: +)~
@@ -30,12 +30,9 @@ STUFF_options=: STUFF_names, <'all'
 STUFF_options_plurals=: STUFF_options ,&.> STUFF_names_plural,a:
 PLURAL_OPTION=:((,.&|:@:,:) (##<@(''"_))) STUFF_names_plural
 
-'maybe delete this code' 1 : 0
-spot=: 3 :' 1 (STUFF_names i. y) } STUFF_none '
-Sledge=: 1 :' (spot <''sledge'') * +/,m '
-Ladder=: 1 :' (spot <''ladder'') * +/,m '
-Gold=:   1 :' (spot <''gold''  ) * +/,m '
-)
+Sledge=: 1 :' (+/,m) 0} STUFF_none '
+Ladder=: 1 :' (+/,m) 1} STUFF_none '
+Gold  =: 1 :' (+/,m) 2} STUFF_none '
 
 'player commands' 1 : 0
 CMDS_direction=. , { (dig`move) ; <DIRECTION_text

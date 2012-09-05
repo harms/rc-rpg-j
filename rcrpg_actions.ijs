@@ -4,11 +4,14 @@ NB. actions focused on the model:
 
 move=: 3 : 0
  PASSAGE_EXISTS=. (PC_location { WAY) (] -: *) WAYS {~ DIRECTION_ZYX i. direct y
- LADDER_AND_CLIMBING=. (1 Ladder +/@:* PC_location { STUFF) +. NOT_CLIMBING=. -. y -: {.DIRECTION_text
- CRITERIA=. PASSAGE_EXISTS, LADDER_AND_CLIMBING
+ LADDER_OR_NOT_CLIMBING=. (1 Ladder +/@:* PC_location { STUFF) +. -. y -: DIRECTION_up
+ CRITERIA=. PASSAGE_EXISTS, LADDER_OR_NOT_CLIMBING
  fail_NoWay   =. 3 : ' report NO_PASSAGE_THAT_WAY '
  fail_NoLadder=. 3 : ' report NO_LADDER_SET_TO_CLIMB '
- succeed      =. 3 : ' report MOVED_THAT_WAY label_1. PC_location=: locate (direct y) + zyx PC_location label_2. enter_room PC_location '
+ s0=. ' report MOVED_THAT_WAY '
+ s1=. ' label_1. PC_location=: locate (direct y) + zyx PC_location '
+ s2=. ' label_2. enter_room PC_location '
+ succeed=. 3 : (s0, s1, s2)
  Possibilities=. (fail_NoWay,fail_NoLadder) ` fail_NoWay ` fail_NoLadder ` succeed
  (Possibilities resolve CRITERIA)`:6 y
 )
@@ -48,7 +51,7 @@ dig=: 3 : 0
  CRITERIA=. HAS_TOOL, NO_HOLE
  fail_tool=. 4 : ' report CANNOT_DIG_NO_TOOL '
  fail_hole=. 4 : ' report CANNOT_DIG_ALREADY_EXISTS '
- succeed  =. 4 : ' report DUG_THE_PASSAGEWAY label_here. x make_passageway y '
+ succeed  =. 4 : ' report DUG_THE_PASSAGEWAY label_1. x make_passageway y '
  Possibilities=. (fail_tool,fail_hole) ` fail_tool ` fail_hole ` succeed
  PC_location (Possibilities resolve CRITERIA)`:6 DIRECTION_said
 )
