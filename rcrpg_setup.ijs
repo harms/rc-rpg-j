@@ -10,12 +10,15 @@ Quoted=: 2 : 0
  ( ,. u&.>) {~"_1 [:(<'''')&v {.&.>
 )
 
+singularize=: 3 : 0
+ singulars=. STUFF_options_plurals i. y
+ (singulars<#STUFF_options) {"_1 y,.(STUFF_options,a:) {~ singulars
+)
+
 PLACE_qualities=: ;:'coordinates passageways stuff names'
 UNNAMED=: s:'`'
 
-DIRECTIONS      =: ' up down north south west east'
-DIRECTION_labels=: ;: DIRECTIONS   NB. perhaps eliminate DIRECTION_labels
-DIRECTION_text  =: ;: DIRECTIONS
+DIRECTION_text  =: ;: ' up down north south west east'
 DIRECTION_up    =: {. DIRECTION_text
 DIRECTION_ZYX   =: ( *  _1 1 $~ #) 2# = i. 3
 

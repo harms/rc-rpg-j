@@ -34,7 +34,7 @@ command=: 3 : 0
 
 recognize=: 3 : 0
  CMD_TO_USE_IF_GOOD=. dereference_aliases y
- CMD_INDEX=. COMMANDS i. < QUOTE_PAIR"_ Quoted= CMD_TO_USE_IF_GOOD
+ CMD_INDEX=. COMMANDS i. < singularize QUOTE_PAIR"_ Quoted= CMD_TO_USE_IF_GOOD
  if. CMD_INDEX=#COMMANDS do.
    report DID_NOT_UNDERSTAND
    > COMMAND_noop

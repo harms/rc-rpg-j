@@ -20,7 +20,7 @@ enter_room=: 3 : 0
  0
 )
 
-direct=: DIRECTION_ZYX {~ DIRECTION_labels i. ]
+direct=: DIRECTION_ZYX {~ DIRECTION_text i. ]
 
 includes=: 4 : 0
  * +/ x * y
@@ -85,7 +85,7 @@ choose=: 3 : 0
 assure_room=: 3 : 0
  MISSING=. (# ZYX) = ZYX i. y
  if. MISSING do.
-   CONTENTS=. ([: +/ 0=roll)&> (2#11);(3#8);(8#5)
+   CONTENTS=. ([: +/ 0=roll)&> (2#12);(3#8);(8#5)
    PLACE=: PLACE ,&.> y; SEALED; CONTENTS; UNNAMED
    update PLACE
  end.

@@ -14,6 +14,7 @@ move=: 3 : 0
  succeed=. 3 : (s0, s1, s2)
  Possibilities=. (fail_NoWay,fail_NoLadder) ` fail_NoWay ` fail_NoLadder ` succeed
  (Possibilities resolve CRITERIA)`:6 y
+ 0
 )
 
 equip=: 3 : 0
@@ -54,6 +55,7 @@ dig=: 3 : 0
  succeed  =. 4 : ' report DUG_THE_PASSAGEWAY label_1. x make_passageway y '
  Possibilities=. (fail_tool,fail_hole) ` fail_tool ` fail_hole ` succeed
  PC_location (Possibilities resolve CRITERIA)`:6 DIRECTION_said
+ 0
 )
 
 NB. actions focused on the view:
@@ -71,6 +73,10 @@ inventory=: 3 : 0
 )
 
 NB. actions focused on the controller:
+
+alias=: 4 : 0
+ 0
+)
 
 help=: 3 : 0
  report 'No helpful information is available at this time.'
