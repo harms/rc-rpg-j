@@ -1,7 +1,7 @@
 NB. rcrpg_view.ijs
 
-report=: 3 :' smoutput ''Reporting: '', y '
-log   =: 3 :' smoutput ''Log entry: '', y '
+report=: 3 :' smoutput ''Reporting: '', y ' NB. temporary definition
+log   =: 3 :' smoutput ''Log entry: '', y ' NB. temporary definition
 ERROR                    =: 'An error condition occurred.'
 
 INTRODUCTION=: 0 : 0

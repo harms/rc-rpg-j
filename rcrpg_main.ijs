@@ -20,7 +20,7 @@ rcrpg=: 3 : 0
    if.     2=#COMMAND_DO do. ACTION `:6 (  1 { COMMAND_DO)
    elseif. 3=#COMMAND_DO do. ACTION `:3 (0 2 { COMMAND_DO)
    end.
-  NB. present REPORT
+  NB. present REPORT NB. 'present' will be used when 'report' has been redefined.
  end.
  0$0
 )
