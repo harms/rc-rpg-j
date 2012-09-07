@@ -90,3 +90,5 @@ get_list_punctuation=: 3 : 0
 )
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
+
+NB. See rcrpg_z_gpl.txt for licensing details.

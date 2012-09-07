@@ -7,9 +7,9 @@ see http://rosettacode.org/wiki/RCRPG
 This code will be published on the Rosetta Code website at the sub-page
 http://rosettacode.org/wiki/RCRPG/J
 
-To run this system, copy the files so they are all in a single directory 
-on a system where J is installed. Launch J, load rcrpg_main.ijs, and 
-enter (play '') The parentheses are not needed. To exit the resulting 
+To run this system, copy the files to a system where J is installed. 
+Put all these files in a single directory. Launch J, load rcrpg_main.ijs, 
+and enter (play '') The parentheses are not needed. To exit the resulting 
 play-mode, enter the command "quit" (without quotes.)
 
 Copyright (C) 2012 Tracy Bruce Harms

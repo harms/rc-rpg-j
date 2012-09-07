@@ -75,22 +75,8 @@ inventory=: 3 : 0
 NB. actions focused on the controller:
 
 alias=: 4 : 0
- asWords=. [: ;: [:( #~ ''''~:]) >
- ALIAS=. asWords y
- if. 1~:#ALIAS do.
-   0[report ALIAS_MUST_PARSE_AS_SINGLE_TOKEN return.  
- end.
- ALIASING=. asWords x
- if. (#ALIASING) = +/ (e. COMMANDS_components"_) ALIASING do.
-   if. (#ALIASES) = WHERE_EXISTS=. ALIASES i. ALIAS do.
-     ALIASES=: ALIASES, ALIAS
-     ALIAS_ASSOC=: ALIAS_ASSOC, <ALIASING
-   else.
-     ALIASES=: ALIAS WHERE_EXISTS} ALIASES
-     ALIAS_ASSOC=: (<ALIASING) WHERE_EXISTS} ALIAS_ASSOC     
-   end.
- end.
- 0[report ALIAS_ESTABLISHED
+ REPORTS=. ALIAS_MUST_PARSE_AS_SINGLE_TOKEN; ALIAS_ESTABLISHED
+ REPORTS make_alias x;<y
 )
 
 help=: 3 : 0
@@ -102,3 +88,5 @@ quit=: 3 : 0
  RCRPG_PLAY=: 0
  report 'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
+
+NB. See rcrpg_z_gpl.txt for licensing details.

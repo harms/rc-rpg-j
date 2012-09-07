@@ -69,7 +69,7 @@ dereference_aliases=: 3 : 0
  found=. ] < #@[
  draw =. [ (>:@] * found) i.
  pick_in =. [ found i.
- SUBSTITUTIONS=: (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC NB.TEQUILA
+ SUBSTITUTIONS=. (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC
  <S:0 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
 )
 
@@ -78,6 +78,41 @@ singularize=: 3 : 0
  (singulars<#STUFF_options) {"_1 y,.(STUFF_options,a:) {~ singulars
 )
 
-noOp=: 0:   NB. Avoids "actions" but allows reporting and logging to procede normally.
+make_alias=: 4 : 0
+ asWords=. [: ;: [:( #~ ''''~:]) >
+ 'FAILURE_REPORT SUCCESS_REPORT'=. x
+ TO_BE_ALIASED=. asWords > {. y
+ TO_ALIAS=. asWords > {: y
+ if. 1~:#TO_ALIAS do.
+   0[report FAILURE_REPORT return.  
+ end.
+ if. TO_ALIAS e. COMMANDS_components do.
+   0[report FAILURE_REPORT return.  
+ end.
+ if. (#TO_BE_ALIASED) = +/ (e. COMMANDS_components"_) TO_BE_ALIASED do.
+   if. (#ALIASES) = WHERE_EXISTS=. ALIASES i. TO_ALIAS do.
+     ALIASES=: ALIASES, TO_ALIAS
+     ALIAS_ASSOC=: ALIAS_ASSOC, <TO_BE_ALIASED
+   else.
+     ALIASES=: TO_ALIAS WHERE_EXISTS} ALIASES
+     ALIAS_ASSOC=: (<TO_BE_ALIASED) WHERE_EXISTS} ALIAS_ASSOC     
+   end.
+ end.
+ 0[report SUCCESS_REPORT
+)
+
+'define player commands and some initial aliases' 1 : 0
+CMDS_direction=. , { (dig`move) ; <DIRECTION_text
+CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
+CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
+CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
+COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter in the name noOp intentionally
+                              NB. prevents direct reference by player. See 'command'
+CMDS_meta=. ''`quit ; COMMAND_noop
+COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
+COMMANDS_components=: (QUOTE_PAIR;;COMMAND_noop) -.~ ~. ;COMMANDS
+silent_alias=. 4 :' (;~0#''A'') make_alias x;<y '
+silent_alias/"1 ,/([:,&> ({. {@,&< }.))"_1 ;:&><;._2 PRESET_ALIASES
+)
 
 play_z_=: rcrpg_rcrpglocale_

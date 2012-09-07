@@ -32,18 +32,17 @@ Sledge=: 1 :' (+/,m) 0} STUFF_none '
 Ladder=: 1 :' (+/,m) 1} STUFF_none '
 Gold  =: 1 :' (+/,m) 2} STUFF_none '
 
-'player commands' 1 : 0
-CMDS_direction=. , { (dig`move) ; <DIRECTION_text
-CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
-CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
-CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
-COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter intentionally prevents direct reference by player.
-CMDS_meta=. ''`quit ; COMMAND_noop
-COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
-NB.unnecessary? COMMANDSET_tally=: # COMMANDS
-COMMANDS_components=: (QUOTE_PAIR;;COMMAND_noop) -.~ ~. ;COMMANDS
-NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
-ALIASES=: ;:'t d e'                     NB.TEMPORARY
-ALIAS_ASSOC=: <"0 ;:'take drop equip'   NB.TEMPORARY
-NB. Actually, should set aliases through the alias command
+PRESET_ALIASES=: 0 : 0
+'move north' '_north'  'n'
+'move south' '_south'  's'
+'move east'  '_east'   'e'
+'move west'  '_west'   'w'
+'move up'    'up'     'u'
+'move down'  'down'   'd'
+'inventory'  'inv'    'i'
+'dig'        'attack' 'a'
 )
+
+noOp=: 0:   NB. Avoids "actions" but allows reporting and logging to procede normally.
+
+NB. See rcrpg_z_gpl.txt for licensing details.

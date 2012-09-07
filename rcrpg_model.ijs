@@ -114,3 +114,4 @@ dequote=: 3 : 0
  (#~ ''''~:]) > y
 )
 
+NB. See rcrpg_z_gpl.txt for licensing details.
