@@ -4,7 +4,7 @@ README file for the J implementation of RC-RPG written in September,
 For a general understanding of what this code is intended to do, 
 see http://rosettacode.org/wiki/RCRPG
 
-This code was published on the Rosetta Code website at the sub-page
+This code will be published on the Rosetta Code website at the sub-page
 http://rosettacode.org/wiki/RCRPG/J
 
 To run this system, copy the files to the same directory on a system 
