@@ -10,11 +10,6 @@ Quoted=: 2 : 0
  ( ,. u&.>) {~"_1 [:(<'''')&v {.&.>
 )
 
-singularize=: 3 : 0
- singulars=. STUFF_options_plurals i. y
- (singulars<#STUFF_options) {"_1 y,.(STUFF_options,a:) {~ singulars
-)
-
 PLACE_qualities=: ;:'coordinates passageways stuff names'
 UNNAMED=: s:'`'
 
@@ -45,7 +40,8 @@ CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
 COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter intentionally prevents direct reference by player.
 CMDS_meta=. ''`quit ; COMMAND_noop
 COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
-COMMAND_tally=: # COMMANDS
+NB.unnecessary? COMMANDSET_tally=: # COMMANDS
+COMMANDS_components=: (QUOTE_PAIR;;COMMAND_noop) -.~ ~. ;COMMANDS
 NB. NONALIASING=: I. COMMANDS = CMD_alias NB. unsure whether I need to prevent this, or others
 ALIASES=: ;:'t d e'                     NB.TEMPORARY
 ALIAS_ASSOC=: <"0 ;:'take drop equip'   NB.TEMPORARY

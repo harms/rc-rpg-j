@@ -18,11 +18,13 @@ Note 'overview'
     along with this program. The name of that license file is
     rcrpg_z_gpl.txt.  If not, see <http://www.gnu.org/licenses/>.
 )
+
 require 'misc'   NB. provides the verb 'prompt'
-cocurrent 'rcrpg'
+cocurrent 'rcrpglocale'
 
 NB. The next two lines facilitate having the whole group of rcrpg scripts
-NB. in the same directory as rcrpg_main.ijs, wherever it may be.
+NB. in the same directory. This file, rcrpg_main.ijs, serves as the key
+NB. for the relative positioning calculated here.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
 SCRIPT_PATH=: ;}:}:;:>lcd''
 load SCRIPT_PATH, 'rcrpg_setup.ijs'
@@ -46,13 +48,13 @@ rcrpg=: 3 : 0
 
 command=: 3 : 0
  COMMAND_RAW =: y
- COMMAND_DO  =: recognize pair_if_solo tolower Quoted~: ;: , COMMAND_RAW
+ COMMAND_DO  =: recognize tolower Quoted~: ;: , COMMAND_RAW
  ACTION      =: ((2<#) { ]) COMMAND_DO
  0
 )
 
 recognize=: 3 : 0
- CMD_TO_USE_IF_GOOD=. dereference_aliases y
+ CMD_TO_USE_IF_GOOD=. pair_if_solo dereference_aliases y
  CMD_INDEX=. COMMANDS i. < singularize QUOTE_PAIR"_ Quoted= CMD_TO_USE_IF_GOOD
  if. CMD_INDEX=#COMMANDS do.
    report DID_NOT_UNDERSTAND
@@ -67,23 +69,15 @@ dereference_aliases=: 3 : 0
  found=. ] < #@[
  draw =. [ (>:@] * found) i.
  pick_in =. [ found i.
- SUBSTITUTIONS=. (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC
- ]L:1 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
+ SUBSTITUTIONS=: (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC NB.TEQUILA
+ <S:0 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
 )
 
-alias=: 4 : 0
- if. -. (,:x) -: ;: > x do.
-   smoutput $;:>x NB.TODO TEMPORARY
-   1[report ALIAS_MUST_PARSE_AS_SINGLE_TOKEN return.  
- end.
- 99 NB.TODO TEMPORARY
+singularize=: 3 : 0
+ singulars=. STUFF_options_plurals i. y
+ (singulars<#STUFF_options) {"_1 y,.(STUFF_options,a:) {~ singulars
 )
 
 noOp=: 0:   NB. Avoids "actions" but allows reporting and logging to procede normally.
 
-quit=: 3 : 0
- RCRPG_PLAY=: 0
- report 'Thank you for playing this J implementation of Rosetta Code RPG.'
-)
-
-play_z_=: rcrpg_rcrpg_
+play_z_=: rcrpg_rcrpglocale_

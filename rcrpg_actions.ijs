@@ -18,8 +18,8 @@ move=: 3 : 0
 )
 
 equip=: 3 : 0
- CHOSEN=. STUFF_names i. y
- if. CHOSEN=#STUFF_names do.
+ 'CHOSEN Quantity'=. choose y
+ if. CHOSEN=#STUFF_options do.
    1[log ERROR return.  
  elseif. 0= CHOSEN { PC_stuff do.
    0[report NOTHING_TO_EQUIP
@@ -75,10 +75,30 @@ inventory=: 3 : 0
 NB. actions focused on the controller:
 
 alias=: 4 : 0
- 0
+ asWords=. [: ;: [:( #~ ''''~:]) >
+ ALIAS=. asWords y
+ if. 1~:#ALIAS do.
+   0[report ALIAS_MUST_PARSE_AS_SINGLE_TOKEN return.  
+ end.
+ ALIASING=. asWords x
+ if. (#ALIASING) = +/ (e. COMMANDS_components"_) ALIASING do.
+   if. (#ALIASES) = WHERE_EXISTS=. ALIASES i. ALIAS do.
+     ALIASES=: ALIASES, ALIAS
+     ALIAS_ASSOC=: ALIAS_ASSOC, <ALIASING
+   else.
+     ALIASES=: ALIAS WHERE_EXISTS} ALIASES
+     ALIAS_ASSOC=: (<ALIASING) WHERE_EXISTS} ALIAS_ASSOC     
+   end.
+ end.
+ 0[report ALIAS_ESTABLISHED
 )
 
 help=: 3 : 0
  report 'No helpful information is available at this time.'
  0
+)
+
+quit=: 3 : 0
+ RCRPG_PLAY=: 0
+ report 'Thank you for playing this J implementation of Rosetta Code RPG.'
 )

@@ -3,6 +3,8 @@ NB. rcrpg_view.ijs
 report=: 3 :' smoutput ''Reporting: '', y ' NB. temporary definition
 log   =: 3 :' smoutput ''Log entry: '', y ' NB. temporary definition
 ERROR                    =: 'An error condition occurred.'
+ALIAS_MUST_PARSE_AS_SINGLE_TOKEN=: 'Aliases cannot contain whitespace or special characters.'
+ALIAS_ESTABLISHED        =: 0 0$0
 
 INTRODUCTION=: 0 : 0
 
