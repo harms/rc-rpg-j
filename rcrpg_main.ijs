@@ -89,10 +89,10 @@ make_alias=: 4 : 0
  if. TO_ALIAS e. COMMANDS_components do.
    0[report FAILURE_REPORT return.  
  end.
- if. (#TO_BE_ALIASED) = +/ (e. COMMANDS_components"_) TO_BE_ALIASED do.
+ if. (#TO_BE_ALIASED) = +/ TO_BE_ALIASED e. COMMANDS_components do.
    if. (#ALIASES) = WHERE_EXISTS=. ALIASES i. TO_ALIAS do.
-     ALIASES=: ALIASES, TO_ALIAS
-     ALIAS_ASSOC=: ALIAS_ASSOC, <TO_BE_ALIASED
+     ALIASES=: a:-.~ ALIASES, TO_ALIAS
+     ALIAS_ASSOC=: a:-.~ ALIAS_ASSOC, <TO_BE_ALIASED
    else.
      ALIASES=: TO_ALIAS WHERE_EXISTS} ALIASES
      ALIAS_ASSOC=: (<TO_BE_ALIASED) WHERE_EXISTS} ALIAS_ASSOC     

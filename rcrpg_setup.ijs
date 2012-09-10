@@ -32,6 +32,7 @@ Sledge=: 1 :' (+/,m) 0} STUFF_none '
 Ladder=: 1 :' (+/,m) 1} STUFF_none '
 Gold  =: 1 :' (+/,m) 2} STUFF_none '
 
+ALIAS_ASSOC=: ALIASES=: a:
 PRESET_ALIASES=: 0 : 0
 'move north' '_north'  'n'
 'move south' '_south'  's'
