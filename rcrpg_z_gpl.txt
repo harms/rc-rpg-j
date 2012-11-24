@@ -1,3 +1,7 @@
+This is the licensing portion for the program published by Tracy Bruce Harms, 2012,
+as rcrpg_main.ijs and the associated files that extend it.
+Initial publication of this program was through this address: https://github.com/harms/rc-rpg-j
+
 GNU GENERAL PUBLIC LICENSE
 
 Version 3, 29 June 2007

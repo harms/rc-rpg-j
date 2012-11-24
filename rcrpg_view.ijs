@@ -91,4 +91,4 @@ get_list_punctuation=: 3 : 0
 
 say_list=: [: ; ] ,. [:get_list_punctuation #
 
-NB. See rcrpg_z_gpl.txt for licensing details.
+NB. This file extends rcrpg_main.ijs by Tracy Harms, 2012, https://github.com/harms/rc-rpg-j

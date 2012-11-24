@@ -105,8 +105,8 @@ alter=: 4 : 0
 
 update=: 3 : 0
  'ZYX WAY STUFF NAMES'=: PLACE
- zyx     =: { ZYX"_
- locate  =: ZYX i. ]
+ zyx=:  { ZYX"_
+ locate=: ZYX i. ]
  0
 )
 
@@ -114,4 +114,4 @@ dequote=: 3 : 0
  (#~ ''''~:]) > y
 )
 
-NB. See rcrpg_z_gpl.txt for licensing details.
+NB. This file extends rcrpg_main.ijs by Tracy Harms, 2012, https://github.com/harms/rc-rpg-j

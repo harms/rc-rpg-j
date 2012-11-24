@@ -3,6 +3,7 @@ Note 'overview'
     A MUD-like RPG written to fit the Rosetta Code project detailed at
     http://rosettacode.org/wiki/RCRPG
     Copyright (C) 2012 Tracy Bruce Harms
+    https://github.com/harms/rc-rpg-j
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -11,7 +12,7 @@ Note 'overview'
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
@@ -22,9 +23,9 @@ Note 'overview'
 require 'misc'   NB. provides the verb 'prompt'
 cocurrent 'rcrpglocale'
 
-NB. The next two lines facilitate having the whole group of rcrpg scripts
-NB. in the same directory. This file, rcrpg_main.ijs, serves as the key
-NB. for the relative positioning calculated here.
+NB. SCRIPT_PATH facilitates having the whole group of rcrpg scripts
+NB. in the same directory. The present file, rcrpg_main.ijs, serves 
+NB. as the key for the relative positioning calculated here.
 lcd =: 3 : ' (4!:4<''lcd'') { 4!:3 $0 '
 SCRIPT_PATH=: ;}:}:;:>lcd''
 load SCRIPT_PATH, 'rcrpg_setup.ijs'
@@ -48,8 +49,8 @@ rcrpg=: 3 : 0
 
 command=: 3 : 0
  COMMAND_RAW =: y
- COMMAND_DO  =: recognize tolower Quoted~: ;: , COMMAND_RAW
- ACTION      =: ((2<#) { ]) COMMAND_DO
+ COMMAND_DO=:   recognize tolower Quoted~: ;: , COMMAND_RAW
+ ACTION=:       ((2<#) { ]) COMMAND_DO
  0
 )
 
@@ -67,8 +68,8 @@ recognize=: 3 : 0
 dereference_aliases=: 3 : 0
  RECEIVED=. y
  found=. ] < #@[
- draw =. [ (>:@] * found) i.
- pick_in =. [ found i.
+ draw=.  [ (>:@] * found) i.
+ pick_in=. [ found i.
  SUBSTITUTIONS=. (ALIASES draw RECEIVED) { a:,ALIAS_ASSOC
  <S:0 (ALIASES pick_in RECEIVED) {"0 1 RECEIVED,.SUBSTITUTIONS
 )
@@ -107,7 +108,7 @@ CMDS_stuff=. }: , { (drop`take`equip) ; <STUFF_options
 CMD_alias=. QUOTE_PAIR ; ''`alias , <QUOTE_PAIR
 CMDS_other=. ('name';QUOTE_PAIR); CMD_alias; ''`inventory ; <''`help
 COMMAND_noop=: < ''`noOp , a: NB. embedded capital letter in the name noOp intentionally
-                              NB. prevents direct reference by player. See 'command'
+                              NB. prevents direct reference by player. See verb 'command'
 CMDS_meta=. ''`quit ; COMMAND_noop
 COMMANDS=: pair_if_solo&.> CMDS_direction, CMDS_stuff, CMDS_other, CMDS_meta
 COMMANDS_components=: (QUOTE_PAIR;;COMMAND_noop) -.~ ~. ;COMMANDS

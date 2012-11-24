@@ -1,23 +1,40 @@
 Note 'examples'
 
-      DIRECTION_ZYX ,.&< |:,:DIRECTION_LABELS
-┌────────┬──────┐
-│_1  0  0│`up   │
-│ 1  0  0│`down │
-│ 0 _1  0│`north│
-│ 0  1  0│`south│
-│ 0  0 _1│`west │
-│ 0  0  1│`east │
-└────────┴──────┘
+   cocurrent 'rcrpglocale'
+
+   DIRECTION_ZYX ,.&< >,:DIRECTION_text
+┌────────┬─────┐
+│_1  0  0│up   │
+│ 1  0  0│down │
+│ 0 _1  0│north│
+│ 0  1  0│south│
+│ 0  0 _1│west │
+│ 0  0  1│east │
+└────────┴─────┘
+   
    STUFF_names
 ┌──────┬──────┬────┐
 │sledge│ladder│gold│
 └──────┴──────┴────┘
+
+   rcrpg''
+
+RCRPG: The tiny Rosetta Code Role-Playing Game
+
+Reporting: "Starting room" is the name of this room.
+Reporting: 0 0 0 is the position of this room.
+Reporting: In the room you see 1 sledge.
+Reporting: This room has no exits. Perhaps you can make one?
+> quit
+Reporting: Thank you for playing this J implementation of Rosetta Code RPG.
+
    PLACE
 ┌───────┬───────────┬─────┬──────────────┐
 │ 0  0 0│0 0 0 0 0 0│1 0 0│`Starting room│
 │_5 _1 1│0 0 0 0 0 0│0 0 9│`Prize room   │
 └───────┴───────────┴─────┴──────────────┘
+   
+   NB. ============================================
    take_load 'ladder'
 Reporting: There was nothing to take.
 0
@@ -94,3 +111,5 @@ PLACE
 load 'C:\Users\user\j64-602-user\myactive\rcrpg\rcrpg_main.ijs'
 resolve_roll '?.'
 )
+
+NB. This file extends rcrpg_main.ijs by Tracy Harms, 2012, https://github.com/harms/rc-rpg-j

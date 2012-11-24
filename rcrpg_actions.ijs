@@ -89,4 +89,4 @@ quit=: 3 : 0
  report 'Thank you for playing this J implementation of Rosetta Code RPG.'
 )
 
-NB. See rcrpg_z_gpl.txt for licensing details.
+NB. This file extends rcrpg_main.ijs by Tracy Harms, 2012, https://github.com/harms/rc-rpg-j
