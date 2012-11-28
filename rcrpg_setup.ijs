@@ -28,9 +28,16 @@ STUFF_options=: STUFF_names, <'all'
 STUFF_options_plurals=: STUFF_options ,&.> STUFF_names_plural,a:
 PLURAL_OPTION=:((,.&|:@:,:) (##<@(''"_))) STUFF_names_plural
 
-Sledge=: 1 :' (+/,m) 0} STUFF_none '
-Ladder=: 1 :' (+/,m) 1} STUFF_none '
-Gold=:   1 :' (+/,m) 2} STUFF_none '
+3 : 0 STUFF_names   NB. definitiohn of DSL Adverbs (e.g. Sledge=: ) occur herein
+ capitalize=: }. ,~ a. {~ [:-&32 a. I. {.
+ ADVERB_NAMES=. capitalize"1 > y
+ SLOT_INDICES=. ": |: ,: i. # y
+ PREFIX=. '=: 1 :'' (+/,m) '
+ SUFFIX=. '} STUFF_none '' '
+ w=. ,"1 _
+ SCRIPT=. (ADVERB_NAMES w PREFIX) ,. SLOT_INDICES w SUFFIX
+ 0[ "."1 SCRIPT
+)
 
 ALIAS_ASSOC=: ALIASES=: a:
 PRESET_ALIASES=: 0 : 0
