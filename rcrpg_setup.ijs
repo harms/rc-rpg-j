@@ -28,7 +28,7 @@ STUFF_options=: STUFF_names, <'all'
 STUFF_options_plurals=: STUFF_options ,&.> STUFF_names_plural,a:
 PLURAL_OPTION=:((,.&|:@:,:) (##<@(''"_))) STUFF_names_plural
 
-(toupper&.> STUFF_names)=: =i.3   NB. definition of DSL verbs (e.g. SLEDGE=: ) occurs here
+(toupper&.> STUFF_names)=: =i.3   NB. definition of DSL nouns (e.g. SLEDGE=: ) occurs here
 
 ALIAS_ASSOC=: ALIASES=: a:
 PRESET_ALIASES=: 0 : 0

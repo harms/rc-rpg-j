@@ -4,7 +4,7 @@ initializeGameWorld=: 3 : 0
  SEALED=. 6$0
  PLACE=: (0 3$0);(0 6$0);(0 3$0);(0 1$s:'`')
  PLACE=: PLACE ,&.>  0  0  0; SEALED;(1*SLEDGE); s:'`Starting room'
- PLACE=: PLACE ,&.> _5 _1  1; SEALED;(9*GOLD)  ; s:'`Prize room'
+ PLACE=: PLACE ,&.> _5 _1  1; SEALED;(9*GOLD)  ; s:'`Prize room' 
  update PLACE
 
  PC_equipped=: PC_stuff=: STUFF_none
